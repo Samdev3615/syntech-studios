@@ -1,0 +1,13 @@
+{
+  "version": "5",
+  "dialect": "pg",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1765911970818,
+      "tag": "0000_far_glorian",
+      "breakpoints": true
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+<svg width="400" height="100" viewBox="0 0 400 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- SynTech Studios Logo - Bleu Marine (Pour Fond Blanc/Clair) -->
+
+  <!-- Icon : 3 tons de bleu marine -->
+  <g transform="translate(12, 22)">
+    <!-- Forme 1 : Marine clair -->
+    <rect x="0" y="0" width="30" height="30" rx="7"
+          fill="#1e3a8a" opacity="0.7"/>
+
+    <!-- Forme 2 : Marine moyen -->
+    <rect x="18" y="18" width="28" height="28" rx="6"
+          fill="#1e40af" opacity="0.85"/>
+
+    <!-- Forme 3 : Marine profond -->
+    <rect x="32" y="32" width="24" height="24" rx="5"
+          fill="#172554"/>
+
+    <!-- Lignes de connexion -->
+    <line x1="15" y1="15" x2="32" y2="32"
+          stroke="#1e40af" stroke-width="1.5" opacity="0.3"/>
+    <line x1="32" y1="32" x2="44" y2="44"
+          stroke="#172554" stroke-width="1.5" opacity="0.3"/>
+  </g>
+
+  <!-- Texte "SynTech" en bleu marine -->
+  <text x="80" y="48"
+        font-family="'SF Pro Display', -apple-system, 'Segoe UI', 'Inter', sans-serif"
+        font-size="34"
+        font-weight="600"
+        fill="#1e3a8a"
+        letter-spacing="-1.2">SynTech</text>
+
+  <!-- Sous-texte "Studios" -->
+  <text x="80" y="68"
+        font-family="'SF Pro Display', -apple-system, 'Segoe UI', 'Inter', sans-serif"
+        font-size="14"
+        font-weight="500"
+        fill="#475569"
+        letter-spacing="4">STUDIOS</text>
+</svg>

@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SynTech Studios — Concepts Logo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #0a0a0f;
+            color: #ffffff;
+            padding: 60px 40px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #a1a1aa;
+            font-size: 1.25rem;
+            margin-bottom: 4rem;
+        }
+
+        .concepts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 3rem;
+            margin-bottom: 4rem;
+        }
+
+        .concept-card {
+            background: #1a1a2e;
+            border-radius: 24px;
+            overflow: hidden;
+            border: 2px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .concept-card:hover {
+            border-color: rgba(139, 92, 246, 0.5);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 60px rgba(139, 92, 246, 0.3);
+        }
+
+        .logo-preview {
+            background: #0a0a0f;
+            padding: 80px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 300px;
+        }
+
+        .logo-preview img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .concept-info {
+            padding: 2rem;
+        }
+
+        .concept-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #8b5cf6, #06b6d4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .concept-description {
+            color: #a1a1aa;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .concept-pros {
+            margin-top: 1.5rem;
+        }
+
+        .pros-title {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #10b981;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .pros-list {
+            list-style: none;
+        }
+
+        .pros-list li {
+            color: #d1d5db;
+            font-size: 0.875rem;
+            padding: 0.25rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .pros-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #10b981;
+            font-weight: bold;
+        }
+
+        .style-tag {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: rgba(139, 92, 246, 0.1);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 20px;
+            font-size: 0.875rem;
+            color: #a78bfa;
+            margin-top: 1rem;
+        }
+
+        .action-section {
+            text-align: center;
+            margin-top: 4rem;
+            padding: 3rem;
+            background: rgba(139, 92, 246, 0.05);
+            border-radius: 20px;
+            border: 1px solid rgba(139, 92, 246, 0.2);
+        }
+
+        .action-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .action-text {
+            color: #a1a1aa;
+            margin-bottom: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .concepts-grid {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Choisis ton Logo</h1>
+        <p class="subtitle">3 concepts professionnels pour SynTech Studios</p>
+
+        <div class="concepts-grid">
+            <!-- Option A -->
+            <div class="concept-card">
+                <div class="logo-preview">
+                    <img src="option-a-geometric.png" alt="Option A - Géométrique">
+                </div>
+                <div class="concept-info">
+                    <div class="concept-title">Option A — Abstraction Géométrique</div>
+                    <div class="concept-description">
+                        Formes qui s'emboîtent représentant des solutions modulaires et personnalisées.
+                        Design minimaliste et élégant, évoque la précision technique.
+                    </div>
+                    <div class="concept-pros">
+                        <div class="pros-title">Points Forts</div>
+                        <ul class="pros-list">
+                            <li>Extrêmement moderne et premium</li>
+                            <li>Scalable à toutes tailles</li>
+                            <li>Mémorable visuellement</li>
+                            <li>Versatile (applications multiples)</li>
+                        </ul>
+                    </div>
+                    <span class="style-tag">Style : Apple, Stripe, Linear</span>
+                </div>
+            </div>
+
+            <!-- Option B -->
+            <div class="concept-card">
+                <div class="logo-preview">
+                    <img src="option-b-monogram.png" alt="Option B - Monogramme">
+                </div>
+                <div class="concept-info">
+                    <div class="concept-title">Option B — Monogramme "S"</div>
+                    <div class="concept-description">
+                        Lettre S stylisée avec courbes fluides et modernes.
+                        Bold et confiant, représente la marque de manière unique.
+                    </div>
+                    <div class="concept-pros">
+                        <div class="pros-title">Points Forts</div>
+                        <ul class="pros-list">
+                            <li>Identité forte et reconnaissable</li>
+                            <li>Fonctionne seul (icon standalone)</li>
+                            <li>Intemporel et professionnel</li>
+                            <li>Facile à décliner (merchandise, etc.)</li>
+                        </ul>
+                    </div>
+                    <span class="style-tag">Style : Slack, Spotify, Samsung</span>
+                </div>
+            </div>
+
+            <!-- Option C -->
+            <div class="concept-card">
+                <div class="logo-preview">
+                    <img src="option-c-symbol.png" alt="Option C - Symbole">
+                </div>
+                <div class="concept-info">
+                    <div class="concept-title">Option C — Symbole de Création</div>
+                    <div class="concept-description">
+                        Formes géométriques (triangle, cercle, carré) évoquant construction, design et technologie.
+                        Créatif sans être trop abstrait.
+                    </div>
+                    <div class="concept-pros">
+                        <div class="pros-title">Points Forts</div>
+                        <ul class="pros-list">
+                            <li>Évoque création et transformation</li>
+                            <li>Équilibre créativité et professionnalisme</li>
+                            <li>Unique dans le secteur tech</li>
+                            <li>Storytelling visuel fort</li>
+                        </ul>
+                    </div>
+                    <span class="style-tag">Style : Figma, Notion, Webflow</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="action-section">
+            <div class="action-title">🎯 Prochaine Étape</div>
+            <div class="action-text">
+                Dis-moi quel concept tu préfères, ou si tu veux des ajustements !<br>
+                Je peux aussi combiner des éléments de plusieurs concepts.
+            </div>
+        </div>
+    </div>
+</body>
+</html>

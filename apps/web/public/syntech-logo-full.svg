@@ -1,0 +1,57 @@
+<svg width="400" height="100" viewBox="0 0 400 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- SynTech Studios Logo - Bleu Ocean -->
+  <!-- Palette : Cyan → Bleu Vif → Bleu Profond -->
+
+  <defs>
+    <linearGradient id="oceanGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#7dd3fc;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#0ea5e9;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0369a1;stop-opacity:1" />
+    </linearGradient>
+
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Icon : 3 tons de bleu Ocean -->
+  <g id="logo-mark" transform="translate(12, 22)">
+    <!-- Forme 1 : Cyan clair -->
+    <rect x="0" y="0" width="30" height="30" rx="7"
+          fill="#7dd3fc" opacity="0.85"/>
+
+    <!-- Forme 2 : Bleu vif -->
+    <rect x="18" y="18" width="28" height="28" rx="6"
+          fill="#0ea5e9" opacity="0.9"/>
+
+    <!-- Forme 3 : Bleu profond -->
+    <rect x="32" y="32" width="24" height="24" rx="5"
+          fill="#0369a1"/>
+
+    <!-- Lignes de connexion -->
+    <line x1="15" y1="15" x2="32" y2="32"
+          stroke="#0ea5e9" stroke-width="1.5" opacity="0.3"/>
+    <line x1="32" y1="32" x2="44" y2="44"
+          stroke="#0369a1" stroke-width="1.5" opacity="0.3"/>
+  </g>
+
+  <!-- Texte "SynTech" -->
+  <text x="80" y="48"
+        font-family="'SF Pro Display', -apple-system, 'Segoe UI', 'Inter', sans-serif"
+        font-size="34"
+        font-weight="600"
+        fill="#ffffff"
+        letter-spacing="-1.2">SynTech</text>
+
+  <!-- Sous-texte "Studios" -->
+  <text x="80" y="68"
+        font-family="'SF Pro Display', -apple-system, 'Segoe UI', 'Inter', sans-serif"
+        font-size="14"
+        font-weight="500"
+        fill="#71717a"
+        letter-spacing="4">STUDIOS</text>
+</svg>

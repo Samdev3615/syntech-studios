@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comparaison Palettes Bleues</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
+            background: #0a0a0f;
+            color: #ffffff;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #ffffff;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #a1a1aa;
+            margin-bottom: 3rem;
+            font-size: 1.125rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .palette-card {
+            background: #1a1a2e;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 2px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .palette-card:hover {
+            border-color: rgba(96, 165, 250, 0.5);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 60px rgba(96, 165, 250, 0.3);
+        }
+
+        .logo-display {
+            background: #0a0a0f;
+            padding: 60px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 200px;
+        }
+
+        .logo-display img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .palette-info {
+            padding: 2rem;
+        }
+
+        .palette-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            color: #ffffff;
+        }
+
+        .palette-description {
+            color: #a1a1aa;
+            margin-bottom: 1.5rem;
+            font-size: 0.9375rem;
+        }
+
+        .color-swatches {
+            display: flex;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .swatch {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+        }
+
+        .swatch-label {
+            font-size: 0.75rem;
+            color: #71717a;
+            text-align: center;
+            margin-top: 0.5rem;
+        }
+
+        .characteristics {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .char-title {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #71717a;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+
+        .char-value {
+            color: #ffffff;
+            font-size: 0.9375rem;
+        }
+
+        .white-bg-section {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 3rem;
+            margin-top: 3rem;
+        }
+
+        .white-bg-section h2 {
+            color: #1e3a8a;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .white-bg-display {
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 60px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎨 Choisis ta Palette de Bleu</h1>
+        <p class="subtitle">3 palettes + Version pour fond blanc</p>
+
+        <!-- Les 3 Options sur Fond Foncé -->
+        <div class="grid">
+            <!-- Option 1 -->
+            <div class="palette-card">
+                <div class="logo-display">
+                    <img src="option-1-tech-blue.svg" alt="Option 1">
+                </div>
+                <div class="palette-info">
+                    <div class="palette-title">Option 1 — Bleu Tech</div>
+                    <div class="palette-description">
+                        Classique et professionnel. Du ciel au profond.
+                        Style moderne et rassurant.
+                    </div>
+                    <div class="color-swatches">
+                        <div>
+                            <div class="swatch" style="background: #60a5fa;"></div>
+                            <div class="swatch-label">Clair</div>
+                        </div>
+                        <div>
+                            <div class="swatch" style="background: #3b82f6;"></div>
+                            <div class="swatch-label">Moyen</div>
+                        </div>
+                        <div>
+                            <div class="swatch" style="background: #1d4ed8;"></div>
+                            <div class="swatch-label">Foncé</div>
+                        </div>
+                    </div>
+                    <div class="characteristics">
+                        <div class="char-title">Caractère</div>
+                        <div class="char-value">Professionnel • Accessible • Tech</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Option 2 -->
+            <div class="palette-card">
+                <div class="logo-display">
+                    <img src="option-2-ocean-blue.svg" alt="Option 2">
+                </div>
+                <div class="palette-info">
+                    <div class="palette-title">Option 2 — Bleu Ocean</div>
+                    <div class="palette-description">
+                        Plus vif et énergique. Du cyan au turquoise profond.
+                        Style dynamique et moderne.
+                    </div>
+                    <div class="color-swatches">
+                        <div>
+                            <div class="swatch" style="background: #7dd3fc;"></div>
+                            <div class="swatch-label">Cyan</div>
+                        </div>
+                        <div>
+                            <div class="swatch" style="background: #0ea5e9;"></div>
+                            <div class="swatch-label">Vif</div>
+                        </div>
+                        <div>
+                            <div class="swatch" style="background: #0369a1;"></div>
+                            <div class="swatch-label">Profond</div>
+                        </div>
+                    </div>
+                    <div class="characteristics">
+                        <div class="char-title">Caractère</div>
+                        <div class="char-value">Énergique • Innovant • Frais</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Option 3 -->
+            <div class="palette-card">
+                <div class="logo-display">
+                    <img src="option-3-corporate-blue.svg" alt="Option 3">
+                </div>
+                <div class="palette-info">
+                    <div class="palette-title">Option 3 — Bleu Corporate</div>
+                    <div class="palette-description">
+                        Plus sobre et élégant. Du pastel au nuit.
+                        Style premium et confiant.
+                    </div>
+                    <div class="color-swatches">
+                        <div>
+                            <div class="swatch" style="background: #93c5fd;"></div>
+                            <div class="swatch-label">Pastel</div>
+                        </div>
+                        <div>
+                            <div class="swatch" style="background: #2563eb;"></div>
+                            <div class="swatch-label">Royal</div>
+                        </div>
+                        <div>
+                            <div class="swatch" style="background: #1e40af;"></div>
+                            <div class="swatch-label">Nuit</div>
+                        </div>
+                    </div>
+                    <div class="characteristics">
+                        <div class="char-title">Caractère</div>
+                        <div class="char-value">Élégant • Premium • Confiant</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Version pour Fond Blanc -->
+        <div class="white-bg-section">
+            <h2>📄 Version pour Fond Blanc — Bleu Marine</h2>
+            <div class="white-bg-display">
+                <img src="version-marine-white-bg.svg" alt="Version Marine">
+            </div>
+            <div style="text-align: center; margin-top: 2rem; color: #475569;">
+                <p style="margin-bottom: 1rem;">
+                    <strong>Bleu Marine élégant</strong> au lieu du noir sur fond clair
+                </p>
+                <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                    <div>
+                        <div class="swatch" style="background: #1e3a8a; width: 50px; height: 50px; margin: 0 auto;"></div>
+                        <div class="swatch-label" style="color: #475569;">Marine Clair</div>
+                    </div>
+                    <div>
+                        <div class="swatch" style="background: #1e40af; width: 50px; height: 50px; margin: 0 auto;"></div>
+                        <div class="swatch-label" style="color: #475569;">Marine Moyen</div>
+                    </div>
+                    <div>
+                        <div class="swatch" style="background: #172554; width: 50px; height: 50px; margin: 0 auto;"></div>
+                        <div class="swatch-label" style="color: #475569;">Marine Profond</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 3rem; padding: 2rem; background: rgba(96, 165, 250, 0.1); border-radius: 16px; border: 1px solid rgba(96, 165, 250, 0.2);">
+            <p style="color: #a1a1aa; font-size: 1.125rem;">
+                🎯 Dis-moi quelle <strong>option (1, 2 ou 3)</strong> tu préfères,<br>
+                et je génère tous les fichiers finaux !
+            </p>
+        </div>
+    </div>
+</body>
+</html>

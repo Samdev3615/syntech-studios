@@ -1,0 +1,40 @@
+<svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- SynTech Studios Icon - Bleu Ocean -->
+
+  <defs>
+    <linearGradient id="iconOceanGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#7dd3fc;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#0ea5e9;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0369a1;stop-opacity:1" />
+    </linearGradient>
+
+    <filter id="iconGlow">
+      <feGaussianBlur stdDeviation="1.5" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Icon centré -->
+  <g transform="translate(10, 10)">
+    <!-- Forme 1 : Cyan clair -->
+    <rect x="0" y="0" width="30" height="30" rx="7"
+          fill="#7dd3fc" opacity="0.85" filter="url(#iconGlow)"/>
+
+    <!-- Forme 2 : Bleu vif -->
+    <rect x="18" y="18" width="28" height="28" rx="6"
+          fill="#0ea5e9" opacity="0.9"/>
+
+    <!-- Forme 3 : Bleu profond -->
+    <rect x="32" y="32" width="24" height="24" rx="5"
+          fill="#0369a1"/>
+
+    <!-- Lignes de connexion -->
+    <line x1="15" y1="15" x2="32" y2="32"
+          stroke="#0ea5e9" stroke-width="1.5" opacity="0.3"/>
+    <line x1="32" y1="32" x2="44" y2="44"
+          stroke="#0369a1" stroke-width="1.5" opacity="0.3"/>
+  </g>
+</svg>

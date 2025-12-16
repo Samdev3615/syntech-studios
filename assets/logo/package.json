@@ -1,0 +1,21 @@
+{
+  "name": "syntech-logo-generator",
+  "version": "1.0.0",
+  "description": "Générateur PNG depuis SVG pour SynTech Studios",
+  "main": "generate-pngs.js",
+  "scripts": {
+    "generate": "node generate-pngs.js",
+    "install-deps": "npm install sharp"
+  },
+  "keywords": [
+    "svg",
+    "png",
+    "logo",
+    "favicon"
+  ],
+  "author": "SynTech Studios",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "sharp": "^0.33.5"
+  }
+}

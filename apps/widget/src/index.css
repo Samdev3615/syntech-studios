@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --ocean-light: #7dd3fc;
+  --ocean: #0ea5e9;
+  --ocean-dark: #0369a1;
+}
+
+body {
+  margin: 0;
+  font-family: 'SF Pro Display', 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+}

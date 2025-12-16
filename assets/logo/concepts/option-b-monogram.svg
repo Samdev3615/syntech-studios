@@ -1,0 +1,50 @@
+<svg width="400" height="100" viewBox="0 0 400 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- OPTION B : Monogramme S Stylisé -->
+  <!-- Style : Bold, moderne, Slack/Spotify-like -->
+
+  <defs>
+    <linearGradient id="gradB" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#8b5cf6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Icon : Lettre S stylisée et moderne -->
+  <g transform="translate(10, 20)">
+    <!-- S moderne avec courbes fluides -->
+    <path d="M 35 10
+             Q 45 10, 50 15
+             Q 55 20, 55 28
+             Q 55 35, 50 40
+             L 30 40
+             Q 15 40, 15 52
+             Q 15 60, 25 60
+             Q 35 60, 40 55
+             L 50 60
+             Q 45 70, 25 70
+             Q 5 70, 5 52
+             Q 5 40, 15 35
+             L 35 35
+             Q 50 35, 50 22
+             Q 50 15, 40 15
+             Q 30 15, 25 20
+             Z"
+          fill="url(#gradB)"/>
+  </g>
+
+  <!-- Texte "SynTech" -->
+  <text x="75" y="50"
+        font-family="'SF Pro Display', -apple-system, 'Segoe UI', sans-serif"
+        font-size="32"
+        font-weight="700"
+        fill="#ffffff"
+        letter-spacing="-1">SynTech</text>
+
+  <!-- Sous-texte "Studios" -->
+  <text x="75" y="70"
+        font-family="'SF Pro Display', -apple-system, 'Segoe UI', sans-serif"
+        font-size="14"
+        font-weight="500"
+        fill="#71717a"
+        letter-spacing="3">STUDIOS</text>
+</svg>

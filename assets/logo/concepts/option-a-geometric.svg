@@ -1,0 +1,42 @@
+<svg width="400" height="100" viewBox="0 0 400 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- OPTION A : Abstraction Géométrique Élégante -->
+  <!-- Style : Minimaliste, Apple/Stripe-like -->
+
+  <defs>
+    <linearGradient id="gradA" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#8b5cf6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Icon : Formes géométriques qui s'emboîtent -->
+  <g transform="translate(15, 25)">
+    <!-- Forme 1 : Carré arrondi -->
+    <rect x="0" y="0" width="25" height="25" rx="6"
+          fill="url(#gradA)" opacity="0.9"/>
+
+    <!-- Forme 2 : Rectangle qui s'emboîte -->
+    <rect x="15" y="15" width="25" height="25" rx="6"
+          fill="url(#gradA)" opacity="0.7"/>
+
+    <!-- Forme 3 : Petit carré accent -->
+    <rect x="30" y="30" width="20" height="20" rx="5"
+          fill="url(#gradA)"/>
+  </g>
+
+  <!-- Texte "SynTech" -->
+  <text x="75" y="50"
+        font-family="'SF Pro Display', -apple-system, 'Segoe UI', sans-serif"
+        font-size="32"
+        font-weight="600"
+        fill="#ffffff"
+        letter-spacing="-1">SynTech</text>
+
+  <!-- Sous-texte "Studios" -->
+  <text x="75" y="70"
+        font-family="'SF Pro Display', -apple-system, 'Segoe UI', sans-serif"
+        font-size="14"
+        font-weight="500"
+        fill="#71717a"
+        letter-spacing="3">STUDIOS</text>
+</svg>
