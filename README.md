@@ -2,9 +2,14 @@
 
 **Studio de développement premium** — Web, Mobile, CRM, Automation & Design
 
-[![Status](https://img.shields.io/badge/Status-En%20D%C3%A9veloppement-yellow)]()
-[![Version](https://img.shields.io/badge/Version-0.2.0-blue)]()
-[![Budget](https://img.shields.io/badge/Budget-20--55€%2Fmois-green)]()
+[![GitHub](https://img.shields.io/github/stars/Samdev3615/syntech-studios?style=social)](https://github.com/Samdev3615/syntech-studios)
+[![Status](https://img.shields.io/badge/Status-En%20D%C3%A9veloppement-yellow)](https://github.com/Samdev3615/syntech-studios)
+[![Version](https://img.shields.io/badge/Version-0.2.0-blue)](https://github.com/Samdev3615/syntech-studios/releases)
+[![License](https://img.shields.io/badge/License-Proprietary-red)](https://github.com/Samdev3615/syntech-studios)
+[![Progress](https://img.shields.io/badge/Progress-14%25-brightgreen)](https://github.com/Samdev3615/syntech-studios/blob/main/DEVLOG.md)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.3-blue?logo=typescript)](https://www.typescriptlang.org/)
+[![Next.js](https://img.shields.io/badge/Next.js-14-black?logo=next.js)](https://nextjs.org/)
+[![Budget](https://img.shields.io/badge/Budget-20--55€%2Fmois-green)](https://github.com/Samdev3615/syntech-studios/blob/main/ARCHITECTURE.md#budget)
 
 ---
 
