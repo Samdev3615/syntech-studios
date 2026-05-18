@@ -914,6 +914,400 @@ git init
 
 ---
 
+### 📅 2026-03-03 — Session 1.3 : Design System Frontend
+**Durée effective** : 2h
+**Développeur** : Équipe SynTech
+**Status** : ✅ Complété
+
+#### Objectifs
+- [x] Configurer Tailwind avec CSS vars shadcn + palette Ocean Blue
+- [x] Configurer fonts via `next/font` (Inter + Fira Code)
+- [x] Créer composants shadcn/ui adaptés (Button, Input, Textarea, Card, Dialog, DropdownMenu, Badge, Separator)
+- [x] Créer composant Typography custom
+- [x] Créer page `/design` (vitrine composants)
+
+#### Réalisations
+- ✅ `tailwind.config.ts` mis à jour : plugin `tailwindcss-animate`, CSS vars, fontFamily, animations
+- ✅ `globals.css` : variables HSL dark theme complètes (background, foreground, primary, accent, destructive…)
+- ✅ `apps/web/src/lib/utils.ts` : fonction `cn()` locale (clsx + tailwind-merge)
+- ✅ `layout.tsx` : next/font Inter + Fira Code avec variables CSS `--font-inter` / `--font-fira-code`
+- ✅ 8 composants shadcn dans `apps/web/src/components/ui/`
+- ✅ `typography.tsx` : H1-H4, Lead, Muted, Code, Blockquote, GradientHeading
+- ✅ `apps/web/src/app/design/page.tsx` : showcase complet
+- ✅ `.eslintrc.json` créé (était manquant → causait erreurs de build Next.js)
+
+#### Problèmes rencontrés
+- ⚠️ `cn()` de `@syntech/ui` échouait au runtime (résolution cross-package) → Solution : créer `apps/web/src/lib/utils.ts` local (pattern standard shadcn)
+- ⚠️ ESLint config manquante → `next build` échouait → Créé `.eslintrc.json`
+- ⚠️ `'React' is not defined` → Ajouté `import type React from 'react'`
+
+#### Métriques
+- Fichiers créés : 14
+- Lignes de code : ~800
+
+---
+
+### 📅 2026-03-03 — Session 1.4 : Architecture Backend (API Routes)
+**Durée effective** : 1h30
+**Développeur** : Équipe SynTech
+**Status** : ✅ Complété
+
+#### Objectifs
+- [x] Réécrire `apps/backend/src/index.ts` (Helmet, CORS, rate limiter, MVC router)
+- [x] Créer middlewares (error, logger Winston, rate-limit)
+- [x] Créer structure MVC (routes, controllers, services)
+- [x] Route `/health` fonctionnelle
+- [x] Session controller + service (squelette)
+
+#### Réalisations
+- ✅ `index.ts` : helmet, CORS explicite, request logger, MVC router, 404 + error handler global
+- ✅ `middleware/error.middleware.ts` : `AppError`, Zod error handler, global error handler
+- ✅ `middleware/logger.middleware.ts` : Winston (colorisé dev / JSON prod) + HTTP middleware
+- ✅ `middleware/rate-limit.middleware.ts` : `apiRateLimiter` + `strictRateLimiter` (10/h)
+- ✅ `controllers/health.controller.ts`, `controllers/session.controller.ts`
+- ✅ `services/session.service.ts` (squelette 3 modes)
+- ✅ `routes/health.routes.ts`, `routes/session.routes.ts`, `routes/index.ts`
+- ✅ `tsconfig.json` : ajout `"types": ["node", "jest"]`
+
+#### Problèmes rencontrés
+- ⚠️ TS2742 Express type inférence → typage explicite `const app: express.Application`
+- ⚠️ `OpenAI.APIError` utilisé comme type → import direct `APIError` depuis `'openai'`
+
+#### Métriques
+- Fichiers créés : 9
+- Lignes de code : ~450
+
+---
+
+## 🎯 PHASE 2 — BACKEND CORE
+
+### 📅 2026-03-03 — Session 2.1 : Service de Session & Privacy Modes
+**Durée effective** : 2h
+**Développeur** : Équipe SynTech
+**Status** : ✅ Complété
+
+#### Objectifs
+- [x] Implémenter `SessionService` complet (3 modes : demo, private, nda)
+- [x] Créer `MessageService` (CRUD messages + cache Redis)
+- [x] Créer routes et controllers messages
+- [x] Tests unitaires Jest
+
+#### Réalisations
+- ✅ `SessionService` :
+  - Mode `demo` : Map en mémoire (auto-purge 30min)
+  - Mode `private` : Redis avec TTL 2h (`redisHelpers.setSession()`)
+  - Mode `nda` : Drizzle ORM → PostgreSQL `sessions` table
+- ✅ `MessageService` : insert, getBySession, toOpenAIFormat(), cache Redis
+- ✅ `controllers/message.controller.ts` + `routes/message.routes.ts`
+- ✅ `__tests__/session.service.test.ts` : 5 tests (mocks Redis/DB/logger)
+- ✅ `package.json` : jest, @types/jest, ts-jest (ESM preset)
+
+#### Problèmes rencontrés
+- ⚠️ Jest globals TS2304 → Ajouté `"types": ["node", "jest"]` à tsconfig
+
+#### Métriques
+- Fichiers créés : 5
+- Lignes de code : ~500
+- Tests : 5/5 passent
+
+---
+
+### 📅 2026-03-03 — Session 2.2 : Intégration OpenAI
+**Durée effective** : 2h
+**Développeur** : Équipe SynTech
+**Status** : ✅ Complété
+
+#### Objectifs
+- [x] Créer `OpenAIService` (completion + streaming SSE)
+- [x] Créer `PromptLibrary` (system prompts + welcome messages)
+- [x] Créer `ConversationEngine` (orchestration complète)
+- [x] Routes et controllers chat
+
+#### Réalisations
+- ✅ `openai.service.ts` : `complete()`, `streamToResponse()` (SSE), fallback GPT-3.5, `pruneContext()` (garde 20 derniers messages)
+- ✅ `prompt.library.ts` : `SYSTEM_MAIN`, `SYSTEM_DOCUMENT_ANALYSIS`, `SYSTEM_BRIEF_GENERATION`, `WELCOME_MESSAGE(mode)`
+- ✅ `conversation.engine.ts` : `startConversation()`, `sendMessage()`, `streamMessage()`, `analyzeDocument()`, `generateBrief()` (JSON parse)
+- ✅ `controllers/chat.controller.ts` + `routes/chat.routes.ts`
+- ✅ Détection automatique `briefReady` à 8 échanges
+
+#### Problèmes rencontrés
+- ⚠️ `OpenAI.APIError` (valeur, pas type) → `import OpenAI, { APIError } from 'openai'`
+
+#### Métriques
+- Fichiers créés : 4
+- Lignes de code : ~600
+
+---
+
+### 📅 2026-03-03 — Session 2.3 : Upload & Parsing de Fichiers
+**Durée effective** : 1h30
+**Développeur** : Équipe SynTech
+**Status** : ✅ Complété
+
+#### Objectifs
+- [x] Setup Multer (mémoire, 10 MB, PDF/DOCX seulement)
+- [x] Créer `FileService` (upload Cloudflare R2, persistence DB)
+- [x] Créer `RAGService` (extraction texte PDF/DOCX, analyse IA)
+- [x] Créer `file.controller` + `file.routes`
+- [x] TypeScript propre (`tsc --noEmit` sans erreurs)
+
+#### Réalisations
+- ✅ `services/file.service.ts` : Multer memoryStorage, R2 via `@aws-sdk/lib-storage` Upload, CRUD DB `uploadedFiles`
+- ✅ `services/rag.service.ts` : `extractText()` (pdf-parse / mammoth), `analyze()` (GPT → gaps + questions JSON)
+- ✅ `controllers/file.controller.ts` : upload → R2 → RAG analyze → inject dans ConversationEngine
+- ✅ `routes/file.routes.ts` + update `routes/index.ts`
+- ✅ Packages ajoutés : multer, pdf-parse, mammoth, @aws-sdk/client-s3, @aws-sdk/lib-storage, @types/multer, @types/pdf-parse
+
+#### Problèmes rencontrés
+- ⚠️ TS2742 sur `uploadMiddleware` (inferred type non portable) → Annotation explicite `RequestHandler` depuis express
+- ⚠️ `req.file` non reconnu sur `Request` → `@types/multer` augmente automatiquement l'interface
+
+#### Métriques
+- Fichiers créés : 4
+- Lignes de code : ~300
+- `tsc --noEmit` : ✅ 0 erreurs
+
+#### Prochaines étapes
+1. Session 2.4 : WebSocket / Socket.io (chat temps réel)
+2. Session 2.5 : BriefService + export PDF
+3. Session 2.6 : NDA Service
+
+---
+
+### 📅 2026-03-03 — Session 2.4 : WebSocket & Streaming Temps Réel
+**Durée effective** : 1h30
+**Développeur** : Équipe SynTech
+**Status** : ✅ Complété
+
+#### Objectifs
+- [x] Intégrer Socket.io v4 dans le serveur HTTP
+- [x] Ajouter streaming temps réel depuis OpenAI
+- [x] Authentification WebSocket par sessionId
+- [x] Rate limiting (30 msg/min par session)
+
+#### Réalisations
+- ✅ `services/openai.service.ts` : Ajout `streamWithCallback()` pour WebSocket
+- ✅ `services/conversation.engine.ts` : Ajout `streamMessageWS()` — pipeline complet session → DB → streaming
+- ✅ `websocket/websocket.handler.ts` : Serveur Socket.io avec auth middleware, rate limiting Redis, events `chat:message` / `brief:generate`
+- ✅ `index.ts` : Migration `app.listen()` → `createServer(app)` + `setupWebSocket(httpServer)`
+- ✅ Events émis : `chat:typing`, `chat:chunk`, `chat:response`, `brief:ready`
+
+#### Problèmes rencontrés
+- ⚠️ Conflit `app.listen()` vs `httpServer.listen()` → Migration vers `http.createServer(app)` pour partager le port HTTP/WS
+
+#### Métriques
+- Fichiers créés/modifiés : 4
+- Lignes de code : ~250
+
+---
+
+### 📅 2026-03-03 — Session 2.5 : BriefService & Export PDF
+**Durée effective** : 1h30
+**Développeur** : Équipe SynTech
+**Status** : ✅ Complété
+
+#### Objectifs
+- [x] Créer `BriefService` (CRUD Drizzle ORM)
+- [x] Créer `PDFService` — Brief PDF branding SynTech
+- [x] Exposer endpoints REST (`/api/v1/briefs/:sessionId/pdf`)
+- [x] Intégrer dans WebSocket handler (`brief:generate`)
+
+#### Réalisations
+- ✅ `services/brief.service.ts` : `save()`, `getBySession()`, `getById()` + interface `BriefData`
+- ✅ `services/pdf.service.ts` : `generate()` — PDF pdfkit avec header foncé, sections Ocean Blue, table features priorisées
+- ✅ `controllers/brief.controller.ts` + `routes/brief.routes.ts`
+- ✅ WebSocket `brief:generate` → sauvegarde DB + retourne `briefId` + `pdfUrl`
+- ✅ PDF servi en-mémoire (Buffer), sans stockage R2 pour les briefs
+
+#### Métriques
+- Fichiers créés : 4
+- Lignes de code : ~350
+
+---
+
+### 📅 2026-03-03 — Session 2.6 : NDA Service
+**Durée effective** : 1h
+**Développeur** : Équipe SynTech
+**Status** : ✅ Complété
+
+#### Objectifs
+- [x] Créer `NDAService` (create, accept, getById, getBySession, isAccepted)
+- [x] Générer PDF NDA juridique via `PDFService`
+- [x] Exposer endpoints REST pour le flow NDA complet
+- [x] Signature électronique avec capture IP + userAgent
+
+#### Réalisations
+- ✅ `services/nda.service.ts` : CRUD complet, `accept()` capture IP/userAgent/timestamp
+- ✅ `services/pdf.service.ts` (étendu) : `generateNDA()` — 7 articles juridiques, bloc signature
+- ✅ `controllers/nda.controller.ts` + `routes/nda.routes.ts`
+- ✅ PDF NDA servi on-demand (`/api/v1/nda/:ndaId/pdf`) depuis données DB — pas de R2
+
+#### Décisions Techniques
+- **PDF on-demand** : Choix de générer le PDF NDA à la volée depuis la DB plutôt que de le stocker sur R2 — simplifie le flow et évite la dépendance R2 pour ce cas d'usage
+- **Signature électronique** : IP + userAgent + timestamp = preuve légale suffisante pour NDA non-critique
+
+#### Métriques
+- Fichiers créés/modifiés : 3
+- Lignes de code : ~280
+
+---
+
+### 📅 2026-03-03 — Session 3.1 : Interface Chat Frontend
+**Durée effective** : 2h
+**Développeur** : Équipe SynTech
+**Status** : ✅ Complété
+
+#### Objectifs
+- [x] Créer `lib/api.ts` — client HTTP REST (session, NDA, brief)
+- [x] Créer `lib/socket.ts` — client Socket.io
+- [x] Créer `hooks/useChat.ts` — state machine complète (6 états)
+- [x] Créer 6 composants chat (ModeSelector, NDAForm, NDAPending, MessageBubble, TypingIndicator, BriefDisplay)
+- [x] Créer `ChatInterface.tsx` — orchestrateur principal
+- [x] Build Next.js propre (0 erreurs ESLint / TypeScript)
+
+#### Réalisations
+- ✅ `lib/api.ts` : `createSession()`, `startConversation()`, `createNDA()`, `acceptNDA()`, `getBriefPDFUrl()`, `getNDAPDFUrl()`
+- ✅ `lib/socket.ts` : `createSocket(sessionId)` — Socket.io avec auth, reconnection, transports
+- ✅ `hooks/useChat.ts` : State machine `mode-select → nda-form → nda-pending → chatting → brief-ready → brief-complete`
+- ✅ `components/chat/ModeSelector.tsx` : 3 cartes (Démo, Privé, Confidentiel) avec hover animations
+- ✅ `components/chat/NDAForm.tsx` : Formulaire de saisie NDA + vue acceptation avec lien PDF
+- ✅ `components/chat/MessageBubble.tsx` : Bulles user/assistant + `StreamingBubble` avec curseur clignotant
+- ✅ `components/chat/TypingIndicator.tsx` : 3 points animés (dots bounce)
+- ✅ `components/chat/BriefDisplay.tsx` : Affichage brief structuré + bouton téléchargement PDF
+- ✅ `components/chat/ChatInterface.tsx` : Header, error banner, messages list, input bar
+- ✅ Route `/chat` opérationnelle
+
+#### Problèmes rencontrés
+- ⚠️ ESLint `no-unused-vars` sur noms de paramètres d'interfaces TypeScript → Préfixe `_` + config `argsIgnorePattern: "^_"` dans `.eslintrc.json`
+- ⚠️ `React.KeyboardEvent` / `React.FormEvent` sans import React → Migré vers imports nommés (`KeyboardEvent`, `FormEvent` depuis `react`)
+- ⚠️ Entités HTML non échappées (`'`) en JSX français → Remplacé par `&apos;`
+- ⚠️ `Button` et `Paperclip` importés mais non utilisés → Supprimés
+
+#### Métriques
+- Fichiers créés : 10
+- Lignes de code : ~800
+- Build : ✅ 6 routes — 0 erreur TypeScript / ESLint
+- Bundle `/chat` : 21.2 kB (115 kB First Load JS)
+
+#### Prochaines étapes
+1. Session 3.2 : Animations & polish UI chat (Framer Motion, transitions)
+2. Phase 5 : Site Vitrine (landing page hero, bento grid, sections)
+
+---
+
+### 📅 2026-03-03 — Session 3.2 : Animations & Polish UI Chat
+**Durée effective** : 45min
+**Développeur** : Équipe SynTech
+**Status** : ✅ Complété
+
+#### Objectifs
+- [x] Transitions animées entre les états du chat (AnimatePresence)
+- [x] Slide-in asymétrique des bulles de messages
+- [x] Stagger des cartes de sélection de mode
+- [x] Entrée staggerée du BriefDisplay (celebration entrance)
+- [x] Error banner avec animation height
+- [x] Brief-ready banner avec glow pulsant
+- [x] Auto-resize du textarea
+
+#### Réalisations
+- ✅ `ChatInterface.tsx` : `AnimatePresence mode="wait"` sur les états, error banner `height: 0 → auto`, brief-ready banner avec `boxShadow` pulse infini, textarea auto-resize via `useEffect`, footer slide-in/out animé
+- ✅ `ModeSelector.tsx` : `staggerChildren: 0.08` sur les 3 cartes, `whileHover` + `whileTap` Framer Motion natifs, header fade-in séparé
+- ✅ `MessageBubble.tsx` : Slide-in `x: 20` pour user, `x: -20` pour IA, StreamingBubble aussi animé
+- ✅ `BriefDisplay.tsx` : Header scale-in avec easing spring, sections en `staggerChildren: 0.1`
+
+#### Métriques
+- Fichiers modifiés : 4
+- Lignes ajoutées : ~80 (imports + motion wrappers)
+- Build : ✅ 0 erreur
+- Bundle `/chat` : 55.1 kB (vs 21.2 kB — +33 kB Framer Motion bundle)
+
+#### Prochaines étapes
+1. Phase 5 : Site Vitrine Premium (landing page, hero section, bento grid)
+
+---
+
+### 📅 2026-03-03 — Phase 5 : Site Vitrine Premium (Landing Page)
+**Durée effective** : 1h30
+**Développeur** : Équipe SynTech
+**Status** : ✅ Complété
+
+#### Objectifs
+- [x] Navbar sticky avec effet scroll
+- [x] Hero section plein écran avec gradient animé
+- [x] Bento grid 6 fonctionnalités/services
+- [x] Section "Comment ça marche" — 3 étapes
+- [x] Section confidentialité — 3 modes
+- [x] Stats + CTA final avec glow
+- [x] Footer
+
+#### Réalisations
+- ✅ `components/landing/Navbar.tsx` : Sticky, transparent → `backdrop-blur` sur scroll, CTA → `/chat`
+- ✅ `components/landing/HeroSection.tsx` : Gradient animé + grille subtile + glow radial, H1 avec gradient, badge GPT-4, 2 CTA
+- ✅ `components/landing/FeaturesSection.tsx` : Bento grid 6 cartes (IA Assistant large 2 cols, Web/Mobile, CRM, Design, IA Chatbots, Brief PDF), stagger `useInView`
+- ✅ `components/landing/HowItWorksSection.tsx` : 3 étapes avec icônes + ligne pointillée desktop, numéros gradient
+- ✅ `components/landing/PrivacySection.tsx` : 3 modes (Démo/Privé/Confidentiel) avec badges colorés et features
+- ✅ `components/landing/StatsSection.tsx` : 4 stats + CTA banner gradient avec glow
+- ✅ `components/landing/Footer.tsx` : Logo + copyright + liens
+- ✅ `app/page.tsx` : Assemblage complet, metadata SEO
+
+#### Métriques
+- Fichiers créés : 7 composants + 1 page modifiée
+- Lignes de code : ~500
+- Build : ✅ 0 erreur
+- Bundle `/` : 16.8 kB (145 kB First Load JS)
+
+#### Prochaines étapes
+1. Tests end-to-end du flow complet (landing → chat → brief)
+2. Déploiement (Vercel / Railway) → Phase 6
+
+---
+
+### 📅 2026-03-03 — Phase 6 : Déploiement (Railway + Vercel)
+**Durée effective** : 0h30
+**Développeur** : Équipe SynTech
+**Status** : ✅ Complété (config files) / ⏳ En attente (déploiement dashboard)
+
+#### Objectifs
+- [x] Créer `railway.toml` pour le déploiement backend
+- [x] Créer `apps/backend/.env.example` — documentation variables d'environnement
+- [x] Créer `apps/web/.env.example` — documentation variables d'environnement
+- [ ] Déployer backend sur Railway dashboard
+- [ ] Déployer frontend sur Vercel dashboard
+- [ ] Configurer variables d'environnement production
+- [ ] Vérifier WebSocket en production
+
+#### Réalisations
+- ✅ `railway.toml` : Config nixpacks, build `pnpm --filter @syntech/backend build`, start `node apps/backend/dist/index.js`
+- ✅ `apps/backend/.env.example` : Template complet (NODE_ENV, FRONTEND_URL, DATABASE_URL, OPENAI_API_KEY, UPSTASH)
+- ✅ `apps/web/.env.example` : `NEXT_PUBLIC_BACKEND_URL`
+- ✅ Code existant déjà prêt : `FRONTEND_URL` dans CORS (index.ts), `NEXT_PUBLIC_BACKEND_URL` dans api.ts et socket.ts
+
+#### Ordre de déploiement (à faire manuellement)
+1. Railway : créer projet → "GitHub Repo" → Root `/` → le `railway.toml` est détecté automatiquement
+2. Vercel : importer repo → **Root Directory = `apps/web`** → Next.js auto-détecté
+3. Ajouter `FRONTEND_URL=https://[vercel].vercel.app` dans Railway (après avoir l'URL Vercel)
+4. Ajouter `NEXT_PUBLIC_BACKEND_URL=https://[railway].railway.app` dans Vercel
+
+#### Variables d'environnement Railway (backend)
+- `NODE_ENV=production`
+- `FRONTEND_URL=https://[projet].vercel.app`
+- `DATABASE_URL` (Neon.tech)
+- `OPENAI_API_KEY`
+- `UPSTASH_REDIS_REST_URL`
+- `UPSTASH_REDIS_REST_TOKEN`
+
+#### Vérification post-déploiement
+- `https://[railway].railway.app/health` → `{ status: "ok" }`
+- `https://[vercel].vercel.app/` → landing page visible
+- `https://[vercel].vercel.app/chat` → chat IA + WebSocket connecté
+
+#### Métriques
+- Fichiers créés : 3 (`railway.toml`, 2x `.env.example`)
+- Aucune modification de code nécessaire
+- Build : ✅ (config existante suffisante)
+
+---
+
 ### 📅 2025-12-15 — Session 0.1 : Conception & Architecture
 **Durée effective** : 2h
 **Développeur** : Équipe SynTech
@@ -1276,7 +1670,7 @@ _Aucun pour le moment_
 
 ---
 
-**Dernière mise à jour** : 2025-12-16 à 04:45
-**Session actuelle** : Session 1.1 ✅ TERMINÉE
-**Prochaine session planifiée** : Session 1.2 - Configuration Services Externes
-**Status global** : 🟢 Projet en développement actif, monorepo opérationnel et testé
+**Dernière mise à jour** : 2026-03-03
+**Session actuelle** : Phase 6 ⏳ Config déploiement créée — En attente déploiement dashboard
+**Prochaine session planifiée** : Tests E2E en production
+**Status global** : 🚀 Prêt pour déploiement — Railway + Vercel configurés

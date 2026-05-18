@@ -3,11 +3,94 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    /* Dark theme (par défaut — SynTech Studios est dark-first) */
+    --background: 240 10% 4%;        /* #0a0a0f */
+    --foreground: 210 40% 98%;       /* ~blanc cassé */
+
+    --primary: 199 89% 48%;          /* ocean DEFAULT #0ea5e9 */
+    --primary-foreground: 0 0% 100%; /* blanc */
+
+    --secondary: 240 5% 15%;         /* gris très sombre */
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 240 5% 12%;
+    --muted-foreground: 215 20% 55%;  /* gris moyen */
+
+    --accent: 196 94% 67%;           /* ocean light #7dd3fc */
+    --accent-foreground: 240 10% 4%;  /* fond sombre sur accent clair */
+
+    --destructive: 0 72% 51%;        /* rouge */
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 240 5% 14%;            /* border subtile */
+    --input: 240 5% 14%;
+    --ring: 199 89% 48%;             /* ocean pour le focus ring */
+
+    --radius: 0.5rem;
+  }
+
   * {
-    @apply border-zinc-800;
+    @apply border-border;
   }
 
   body {
-    @apply bg-[#0a0a0f] text-white;
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+
+  /* Scrollbar custom */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-background;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-muted rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--primary) / 0.6);
+  }
+
+  /* Sélection de texte */
+  ::selection {
+    background: hsl(var(--primary) / 0.3);
+    color: hsl(var(--foreground));
+  }
+}
+
+@layer utilities {
+  /* Gradient animé pour la landing */
+  .gradient-animated {
+    background: linear-gradient(
+      -45deg,
+      hsl(var(--primary) / 0.15),
+      hsl(196 94% 67% / 0.1),
+      hsl(var(--primary) / 0.2),
+      hsl(225 89% 40% / 0.1)
+    );
+    background-size: 400% 400%;
+    animation: gradient 8s ease infinite;
+  }
+
+  /* Texte avec gradient ocean */
+  .text-gradient {
+    @apply bg-gradient-to-r from-ocean-light via-ocean to-ocean-dark bg-clip-text text-transparent;
+  }
+
+  /* Glow effect pour les cards */
+  .glow-ocean {
+    box-shadow: 0 0 20px hsl(var(--primary) / 0.15);
+  }
+
+  .glow-ocean-hover {
+    transition: box-shadow 0.3s ease;
+  }
+
+  .glow-ocean-hover:hover {
+    box-shadow: 0 0 30px hsl(var(--primary) / 0.25);
   }
 }

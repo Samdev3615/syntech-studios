@@ -1,41 +1,56 @@
-import express, { Request, Response } from 'express';
+import { createServer } from 'http';
+import express from 'express';
 import cors from 'cors';
+import helmet from 'helmet';
 import dotenv from 'dotenv';
+import { apiRouter } from './routes/index.js';
+import { errorHandler, notFoundHandler } from './middleware/error.middleware.js';
+import { requestLogger, logger } from './middleware/logger.middleware.js';
+import { apiRateLimiter } from './middleware/rate-limit.middleware.js';
+import { setupWebSocket } from './websocket/websocket.handler.js';
 
 dotenv.config();
 
-const app = express();
-const PORT = process.env.PORT || 3001;
+const app: express.Application = express();
+const PORT = process.env.PORT ?? 3001;
+const FRONTEND_URL = process.env.FRONTEND_URL ?? 'http://localhost:3000';
 
-// Middleware
-app.use(cors());
-app.use(express.json());
+// ─── Sécurité ─────────────────────────────────────────────────────────────────
+app.use(helmet());
+app.use(cors({
+  origin: [FRONTEND_URL, 'http://localhost:3000'],
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+}));
 
-// Routes
-app.get('/health', (_req: Request, res: Response) => {
-  res.json({
-    status: 'ok',
-    timestamp: new Date().toISOString(),
-    service: 'SynTech Studios Backend',
-  });
+// ─── Parsing ──────────────────────────────────────────────────────────────────
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ extended: true }));
+
+// ─── Logging ──────────────────────────────────────────────────────────────────
+app.use(requestLogger);
+
+// ─── Rate limiting global ─────────────────────────────────────────────────────
+app.use('/api', apiRateLimiter);
+
+// ─── Routes ───────────────────────────────────────────────────────────────────
+app.use(apiRouter);
+
+// ─── 404 & Error handlers ─────────────────────────────────────────────────────
+app.use(notFoundHandler);
+app.use(errorHandler);
+
+// ─── HTTP Server + WebSocket ───────────────────────────────────────────────────
+const httpServer = createServer(app);
+setupWebSocket(httpServer, FRONTEND_URL);
+
+httpServer.listen(PORT, () => {
+  logger.info('SynTech Studios Backend started');
+  logger.info(`Server: http://localhost:${PORT}`);
+  logger.info(`Health: http://localhost:${PORT}/health`);
+  logger.info(`WebSocket: ws://localhost:${PORT}`);
+  logger.info(`Environment: ${process.env.NODE_ENV ?? 'development'}`);
 });
 
-app.get('/api/v1/status', (_req: Request, res: Response) => {
-  res.json({
-    message: 'SynTech Studios API v1',
-    version: '0.2.0',
-    environment: process.env.NODE_ENV || 'development',
-  });
-});
-
-// 404 handler
-app.use((_req: Request, res: Response) => {
-  res.status(404).json({ error: 'Route not found' });
-});
-
-// Start server
-app.listen(PORT, () => {
-  console.log(`🚀 SynTech Studios Backend`);
-  console.log(`📡 Server running on http://localhost:${PORT}`);
-  console.log(`🌍 Environment: ${process.env.NODE_ENV || 'development'}`);
-});
+export default app;
