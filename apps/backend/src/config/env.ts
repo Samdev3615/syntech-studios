@@ -23,10 +23,9 @@ const envSchema = z.object({
   UPSTASH_REDIS_REST_URL: z.string().url().startsWith('https://'),
   UPSTASH_REDIS_REST_TOKEN: z.string().min(1),
 
-  // OpenAI
-  OPENAI_API_KEY: z.string().min(1),
-  OPENAI_MODEL: z.string().default('gpt-4-turbo-preview'),
-  OPENAI_FALLBACK_MODEL: z.string().default('gpt-3.5-turbo'),
+  // Anthropic Claude
+  ANTHROPIC_API_KEY: z.string().min(1),
+  ANTHROPIC_MODEL: z.string().default('claude-opus-4-7'),
 
   // Cloudflare R2 (optionnel pour le moment)
   R2_ACCOUNT_ID: z.string().optional().or(z.literal('')),

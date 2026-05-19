@@ -1,4 +1,4 @@
-import { OpenAIService, type ChatMessage } from './openai.service.js';
+import { ClaudeService as OpenAIService, type ChatMessage } from './openai.service.js';
 import { MessageService, type MessageRole } from './message.service.js';
 import { SessionService, type PrivacyMode } from './session.service.js';
 import { PromptLibrary } from './prompt.library.js';

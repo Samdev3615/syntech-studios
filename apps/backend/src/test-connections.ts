@@ -17,7 +17,7 @@ async function testConnections() {
   console.log(`   PORT: ${env.PORT}`)
   console.log(`   DATABASE_URL: ${env.DATABASE_URL.substring(0, 50)}...`)
   console.log(`   UPSTASH_REDIS_REST_URL: ${env.UPSTASH_REDIS_REST_URL}`)
-  console.log(`   OPENAI_API_KEY: ${env.OPENAI_API_KEY.substring(0, 20)}...`)
+  console.log(`   ANTHROPIC_API_KEY: ${env.ANTHROPIC_API_KEY.substring(0, 20)}...`)
   console.log('')
 
   // Test 2: PostgreSQL (Neon)

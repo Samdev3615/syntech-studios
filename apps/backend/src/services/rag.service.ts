@@ -1,6 +1,6 @@
 import pdfParse from 'pdf-parse';
 import mammoth from 'mammoth';
-import { OpenAIService } from './openai.service.js';
+import { ClaudeService as OpenAIService } from './openai.service.js';
 import { PromptLibrary } from './prompt.library.js';
 import { logger } from '../middleware/logger.middleware.js';
 import { AppError } from '../middleware/error.middleware.js';
