@@ -1,6 +1,6 @@
 [build]
 builder = "nixpacks"
-buildCommand = "pnpm install --frozen-lockfile && pnpm --filter @syntech/backend build"
+buildCommand = "pnpm install --frozen-lockfile --prod=false && pnpm --filter @syntech/backend build"
 
 [deploy]
 startCommand = "node apps/backend/dist/index.js"
