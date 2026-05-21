@@ -28,7 +28,7 @@ function checkRateLimit(sessionId: string): boolean {
 export function setupWebSocket(httpServer: HTTPServer, frontendUrl: string): SocketServer {
   const io = new SocketServer(httpServer, {
     cors: {
-      origin: [frontendUrl, 'http://localhost:3000'],
+      origin: true,
       credentials: true,
     },
     transports: ['websocket', 'polling'],

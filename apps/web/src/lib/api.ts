@@ -52,6 +52,40 @@ export async function acceptNDA(ndaId: string): Promise<{ success: boolean }> {
   return post(`/api/v1/nda/${ndaId}/accept`);
 }
 
+// ─── Documents ────────────────────────────────────────────────────────────────
+export async function startDocumentConversation(
+  sessionId: string,
+  privacyMode: PrivacyMode
+): Promise<{ welcomeMessage: string }> {
+  return post(`/api/v1/chat/${sessionId}/start`, { mode: 'document', privacyMode });
+}
+
+export interface UploadResult {
+  analysis: string;
+  gaps: string[];
+  questions: string[];
+}
+
+export async function uploadDocument(sessionId: string, file: File): Promise<UploadResult> {
+  const formData = new FormData();
+  formData.append('file', file);
+
+  const res = await fetch(`${API_URL}/api/v1/files/${sessionId}/upload`, {
+    method: 'POST',
+    body: formData,
+  });
+  const json = await res.json() as {
+    message?: string;
+    analysis?: { summary: string; gaps: string[]; questions: string[] };
+  };
+  if (!res.ok) throw new Error(json.message ?? 'Upload failed');
+  return {
+    analysis: json.analysis?.summary ?? '',
+    gaps: json.analysis?.gaps ?? [],
+    questions: json.analysis?.questions ?? [],
+  };
+}
+
 // ─── URLs helpers ─────────────────────────────────────────────────────────────
 export const getBriefPDFUrl  = (sessionId: string) => `${API_URL}/api/v1/briefs/${sessionId}/pdf`;
 export const getNDAPDFUrl    = (ndaId: string)     => `${API_URL}/api/v1/nda/${ndaId}/pdf`;
