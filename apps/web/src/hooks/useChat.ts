@@ -32,6 +32,48 @@ export interface BriefResult {
 
 const MIN_EXCHANGES = 8;
 
+// ─── Persistence ──────────────────────────────────────────────────────────────
+const STORAGE_KEY = 'syntech_session_v1';
+const SESSION_TTL = 24 * 60 * 60 * 1000; // 24h
+
+interface PersistedState {
+  sessionId: string;
+  privacyMode: PrivacyMode;
+  chatState: ChatState;
+  messages: Message[];
+  ndaId: string | null;
+  ndaPdfUrl: string | null;
+  briefResult: BriefResult | null;
+  savedAt: number;
+}
+
+const RESTORABLE_STATES: ChatState[] = ['chatting', 'brief-ready', 'brief-complete'];
+
+function saveToStorage(state: Omit<PersistedState, 'savedAt'>) {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ ...state, savedAt: Date.now() }));
+  } catch { /* storage full or unavailable */ }
+}
+
+function loadFromStorage(): PersistedState | null {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return null;
+    const data = JSON.parse(raw) as PersistedState;
+    if (Date.now() - data.savedAt > SESSION_TTL) {
+      localStorage.removeItem(STORAGE_KEY);
+      return null;
+    }
+    return RESTORABLE_STATES.includes(data.chatState) ? data : null;
+  } catch {
+    return null;
+  }
+}
+
+function clearStorage() {
+  try { localStorage.removeItem(STORAGE_KEY); } catch { /* noop */ }
+}
+
 // ─── Hook ─────────────────────────────────────────────────────────────────────
 export function useChat() {
   const [chatState,        setChatState]        = useState<ChatState>('mode-select');
@@ -46,11 +88,24 @@ export function useChat() {
   const [error,            setError]            = useState<string | null>(null);
   const [isLoading,        setIsLoading]        = useState(false);
   const [lastSuggestions,  setLastSuggestions]  = useState<string[]>([]);
+  const [savedSession,     setSavedSession]     = useState<PersistedState | null>(null);
 
   const socketRef = useRef<Socket | null>(null);
 
   const userMessageCount = messages.filter(m => m.role === 'user').length;
   const progressPct = Math.min(100, Math.round((userMessageCount / MIN_EXCHANGES) * 100));
+
+  // ─── Charger la session persistée au montage ─────────────────────────────
+  useEffect(() => {
+    const saved = loadFromStorage();
+    if (saved) setSavedSession(saved);
+  }, []);
+
+  // ─── Sauvegarder l'état en localStorage à chaque changement important ────
+  useEffect(() => {
+    if (!sessionId || !privacyMode || !RESTORABLE_STATES.includes(chatState)) return;
+    saveToStorage({ sessionId, privacyMode, chatState, messages, ndaId, ndaPdfUrl, briefResult });
+  }, [sessionId, privacyMode, chatState, messages, ndaId, ndaPdfUrl, briefResult]);
 
   // ─── Cleanup socket on unmount ───────────────────────────────────────────
   useEffect(() => {
@@ -58,18 +113,13 @@ export function useChat() {
   }, []);
 
   // ─── Connecter le WebSocket et écouter les events ─────────────────────────
-  const connectSocket = useCallback((sid: string, welcomeMsg: string) => {
+  const connectSocket = useCallback((sid: string, initialMessages: Message[], targetState: ChatState = 'chatting') => {
     const socket = createSocket(sid);
     socketRef.current = socket;
 
-    setMessages([{
-      id: 'welcome',
-      role: 'assistant',
-      content: welcomeMsg,
-      timestamp: new Date().toISOString(),
-    }]);
+    setMessages(initialMessages);
 
-    socket.on('connect', () => { setChatState('chatting'); });
+    socket.on('connect', () => { setChatState(targetState); });
 
     socket.on('chat:typing', ({ isTyping: typing }: { isTyping: boolean }) => {
       setIsTyping(typing);
@@ -102,8 +152,44 @@ export function useChat() {
 
     socket.on('error', ({ message }: { message: string }) => { setError(message); });
     socket.on('connect_error', (err: Error) => {
-      setError(`Connexion impossible : ${err.message}`);
+      // Session expirée côté serveur — on efface le cache et on repart de zéro
+      if (err.message === 'SESSION_NOT_FOUND' || err.message === 'SESSION_NOT_ACTIVE') {
+        clearStorage();
+        setSavedSession(null);
+        setChatState('mode-select');
+        setMessages([]);
+        setSessionId(null);
+        setPrivacyMode(null);
+      } else {
+        setError(`Connexion impossible : ${err.message}`);
+      }
     });
+  }, []);
+
+  // ─── Reprendre une session sauvegardée ───────────────────────────────────
+  const restoreSession = useCallback(() => {
+    if (!savedSession) return;
+    const s = savedSession;
+    setSavedSession(null);
+    setSessionId(s.sessionId);
+    setPrivacyMode(s.privacyMode);
+    setNdaId(s.ndaId);
+    setNdaPdfUrl(s.ndaPdfUrl);
+
+    if (s.chatState === 'brief-complete' && s.briefResult) {
+      setBriefResult(s.briefResult);
+      setMessages(s.messages);
+      setChatState('brief-complete');
+      return;
+    }
+
+    connectSocket(s.sessionId, s.messages, s.chatState);
+  }, [savedSession, connectSocket]);
+
+  // ─── Ignorer la session sauvegardée et repartir de zéro ──────────────────
+  const discardSavedSession = useCallback(() => {
+    clearStorage();
+    setSavedSession(null);
   }, []);
 
   // ─── Sélectionner un mode ─────────────────────────────────────────────────
@@ -165,7 +251,12 @@ export function useChat() {
     setError(null);
     try {
       const { welcomeMessage } = await startConversation(sessionId, privacyMode);
-      connectSocket(sessionId, welcomeMessage);
+      connectSocket(sessionId, [{
+        id: 'welcome',
+        role: 'assistant',
+        content: welcomeMessage,
+        timestamp: new Date().toISOString(),
+      }]);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Une erreur est survenue');
     } finally {
@@ -179,15 +270,16 @@ export function useChat() {
     setIsLoading(true);
     setError(null);
     try {
-      // 1. Démarrer en mode document (rend la session active)
       const { welcomeMessage } = await startDocumentConversation(sessionId, privacyMode);
-      // 2. Connecter le socket
-      connectSocket(sessionId, welcomeMessage);
-      // 3. Uploader + analyser le document
+      connectSocket(sessionId, [{
+        id: 'welcome',
+        role: 'assistant',
+        content: welcomeMessage,
+        timestamp: new Date().toISOString(),
+      }]);
       setIsTyping(true);
       const result = await uploadDocument(sessionId, file);
       setIsTyping(false);
-      // 4. Afficher l'analyse comme message assistant
       setMessages(prev => [...prev, {
         id: `doc-${Date.now()}`,
         role: 'assistant' as const,
@@ -244,6 +336,7 @@ export function useChat() {
     progressPct,
     minExchanges: MIN_EXCHANGES,
     lastSuggestions,
+    savedSession,
     selectMode,
     submitNDAForm,
     handleAcceptNDA,
@@ -251,6 +344,8 @@ export function useChat() {
     uploadDocAndStart,
     sendMessage,
     generateBrief,
+    restoreSession,
+    discardSavedSession,
     clearError: () => setError(null),
   };
 }

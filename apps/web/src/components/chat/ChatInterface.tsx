@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Send, FileText, AlertCircle, Download, RotateCcw,
-  CheckCircle2, ArrowLeft, Shield, Zap, Lock,
+  CheckCircle2, ArrowLeft, Shield, Zap, Lock, History,
 } from 'lucide-react';
 import { useChat } from '@/hooks/useChat';
 import { ModeSelector } from './ModeSelector';
@@ -198,9 +198,11 @@ export function ChatInterface() {
     sessionId, privacyMode, ndaId,
     briefResult, error, isLoading,
     userMessageCount, minExchanges, lastSuggestions,
+    savedSession,
     selectMode, submitNDAForm, handleAcceptNDA,
     skipDocAndStart, uploadDocAndStart,
     sendMessage, generateBrief, clearError,
+    restoreSession, discardSavedSession,
   } = useChat();
 
   const [inputValue, setInputValue] = useState('');
@@ -236,7 +238,10 @@ export function ChatInterface() {
     }
   };
 
-  const handleNewSession = () => { window.location.reload(); };
+  const handleNewSession = () => {
+    discardSavedSession();
+    window.location.reload();
+  };
 
   const lastAssistantIndex = [...messages].reverse().findIndex(m => m.role === 'assistant');
   const lastAssistantId = lastAssistantIndex >= 0
@@ -300,6 +305,43 @@ export function ChatInterface() {
                 Retour
               </Link>
             </header>
+
+            {/* Restore banner */}
+            <AnimatePresence>
+              {savedSession && (
+                <motion.div
+                  initial={{ opacity: 0, y: -8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -8 }}
+                  transition={{ duration: 0.25 }}
+                  className="shrink-0 px-6 py-3 bg-brand-blue/8 border-b border-brand-blue/20"
+                >
+                  <div className="max-w-2xl mx-auto flex items-center gap-3">
+                    <div className="flex items-center gap-2 text-brand-blue-2 flex-1 min-w-0">
+                      <History className="w-4 h-4 shrink-0" />
+                      <span className="text-xs font-medium truncate">
+                        Session précédente — {savedSession.messages.filter(m => m.role === 'user').length} message{savedSession.messages.filter(m => m.role === 'user').length > 1 ? 's' : ''} échangés
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-2 shrink-0">
+                      <button
+                        onClick={discardSavedSession}
+                        className="text-xs text-zinc-500 hover:text-zinc-300 transition-colors px-2 py-1"
+                      >
+                        Ignorer
+                      </button>
+                      <button
+                        onClick={restoreSession}
+                        className="text-xs font-semibold bg-brand-blue/20 border border-brand-blue/40 text-brand-blue-2 hover:bg-brand-blue/30 transition-colors px-3 py-1.5 rounded-lg"
+                      >
+                        Reprendre →
+                      </button>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
             <div className="flex-1 overflow-y-auto">
               <ModeSelector onSelect={selectMode} isLoading={isLoading} />
             </div>
