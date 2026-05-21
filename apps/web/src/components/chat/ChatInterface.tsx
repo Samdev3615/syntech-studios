@@ -361,8 +361,9 @@ export function ChatInterface() {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 0.2 }}
-                    className="h-full overflow-y-auto px-5 py-6 space-y-5"
+                    className="h-full overflow-y-auto py-6"
                   >
+                    <div className="max-w-2xl mx-auto px-5 space-y-5">
                     {messages.map((msg) => (
                       <MessageBubble
                         key={msg.id}
@@ -409,6 +410,7 @@ export function ChatInterface() {
                     </AnimatePresence>
 
                     <div ref={messagesEndRef} />
+                    </div>
                   </motion.div>
                 )}
               </AnimatePresence>

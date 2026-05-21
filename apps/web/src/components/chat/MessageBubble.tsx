@@ -104,7 +104,7 @@ export function MessageBubble({ message, isLastAssistant, suggestions, onQuickRe
 
         <div
           className={cn(
-            'max-w-[78%] rounded-2xl px-4 py-3',
+            'max-w-[85%] rounded-2xl px-4 py-3',
             isUser
               ? 'bg-brand-blue/15 border border-brand-blue/25 text-white rounded-br-sm text-sm leading-relaxed'
               : 'bg-brand-bg-3 border border-zinc-700/50 text-zinc-100 rounded-bl-sm'
@@ -167,7 +167,7 @@ export function StreamingBubble({ content }: { content: string }) {
       className="flex gap-3 justify-start"
     >
       <AIAvatar />
-      <div className="max-w-[78%] rounded-2xl rounded-bl-sm px-4 py-3 bg-brand-bg-3 border border-zinc-700/50 text-zinc-100">
+      <div className="max-w-[85%] rounded-2xl rounded-bl-sm px-4 py-3 bg-brand-bg-3 border border-zinc-700/50 text-zinc-100">
         {renderMarkdown(display)}
         <span className="inline-block w-0.5 h-3.5 bg-brand-blue ml-0.5 animate-pulse align-middle rounded-full" />
       </div>
