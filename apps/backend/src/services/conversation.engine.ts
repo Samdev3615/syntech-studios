@@ -214,7 +214,7 @@ Génère 3 suggestions de réponse courtes et précises en français, adaptées 
 Format strict : suggestion1 | suggestion2 | suggestion3
 Réponds UNIQUEMENT avec les suggestions séparées par |, sans texte avant ou après.`,
       },
-    ], { temperature: 0.4, maxTokens: 80 });
+    ], { temperature: 0.4, maxTokens: 300, noThinking: true });
 
     return result
       .split('|')

@@ -16,6 +16,7 @@ export interface ChatOptions {
   maxTokens?: number;
   stream?: boolean;
   sessionId?: string;
+  noThinking?: boolean;
 }
 
 const client = new Anthropic({ apiKey: env.ANTHROPIC_API_KEY });
@@ -47,14 +48,14 @@ export class ClaudeService {
 
   // ─── Completion simple (sans streaming) ────────────────────────────────────
   async complete(messages: ChatMessage[], options: ChatOptions = {}): Promise<string> {
-    const { maxTokens = 1500, sessionId } = options;
+    const { maxTokens = 1500, sessionId, noThinking = false } = options;
     const { system, messages: msgs } = toAnthropicParams(messages);
 
     try {
       const response = await client.messages.create({
         model: this.model,
         max_tokens: maxTokens,
-        thinking: { type: 'adaptive' },
+        ...(noThinking ? {} : { thinking: { type: 'adaptive' } }),
         ...(system ? { system } : {}),
         messages: msgs,
       });
