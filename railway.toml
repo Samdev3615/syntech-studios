@@ -1,8 +1,7 @@
 [build]
 builder = "nixpacks"
-buildCommand = "pnpm install --frozen-lockfile --prod=false && pnpm --filter @syntech/backend build"
 
 [deploy]
-startCommand = "node apps/backend/dist/index.js"
+startCommand = "pnpm --filter @syntech/backend start:railway"
 restartPolicyType = "on_failure"
 restartPolicyMaxRetries = 3
