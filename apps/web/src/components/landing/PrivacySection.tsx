@@ -1,109 +1,150 @@
-import { Zap, Shield, Lock, CheckCircle2 } from 'lucide-react';
-import { Badge } from '@/components/ui/badge';
-import { cn } from '@/lib/utils';
+'use client';
 
-const MODES = [
-  {
-    icon: Zap,
-    label: 'Mode Démo',
-    badge: 'Gratuit',
-    badgeVariant: 'ocean' as const,
-    color: 'text-ocean',
-    dotColor: 'bg-ocean',
-    border: 'hover:border-ocean/40',
-    description: "Idéal pour découvrir l'assistant. Session de 30 minutes, données non persistées.",
-    features: ['Accès immédiat', 'Sans inscription', 'Session 30 min'],
-  },
+import { useRef } from 'react';
+import { motion, useInView } from 'framer-motion';
+import { Shield, Globe, Lock, FileCheck, Server } from 'lucide-react';
+
+const TRUST_CARDS = [
   {
     icon: Shield,
-    label: 'Mode Privé',
-    badge: 'Recommandé',
-    badgeVariant: 'secondary' as const,
-    color: 'text-violet-400',
-    dotColor: 'bg-violet-400',
-    border: 'hover:border-violet-400/40',
-    description: 'Données chiffrées en transit et au repos. Suppression automatique après 2 heures.',
-    features: ['Chiffrement AES-256', 'Suppression auto 2h', 'Sans trace'],
+    title: 'RGPD conforme',
+    description:
+      'Conformité totale au Règlement Général sur la Protection des Données. Vos données personnelles et celles de vos clients sont traitées dans le strict respect des réglementations européennes.',
+    color: '#3B82F6',
+  },
+  {
+    icon: Globe,
+    title: 'Hébergement UE',
+    description:
+      'Toutes vos données restent sur le sol européen. Pas de transfert hors UE. Infrastructure hébergée en France et Allemagne pour une souveraineté numérique totale.',
+    color: '#8B5CF6',
   },
   {
     icon: Lock,
-    label: 'Mode Confidentiel',
-    badge: 'NDA',
-    badgeVariant: 'warning' as const,
-    color: 'text-amber-400',
-    dotColor: 'bg-amber-400',
-    border: 'hover:border-amber-400/40',
-    description: 'Accord de confidentialité électronique signé. Données persistantes et protégées juridiquement.',
-    features: ['NDA électronique', 'Données persistantes', 'Protection juridique'],
+    title: 'Données chiffrées',
+    description:
+      "Chiffrement AES-256 au repos et TLS 1.3 en transit. Vos données ne peuvent être lues par personne, même en cas d'interception — protection cryptographique de niveau bancaire.",
+    color: '#F59E0B',
+  },
+  {
+    icon: FileCheck,
+    title: 'Accord NDA',
+    description:
+      'Accord de confidentialité signé systématiquement avant tout échange. Protection juridique de vos informations stratégiques, processus métier et données propriétaires.',
+    color: '#22C55E',
+  },
+  {
+    icon: Server,
+    title: 'Environnement sécurisé',
+    description:
+      "Infrastructure iso-tenante, accès restreint par rôle, logs d'audit complets. Chaque projet bénéficie d'un environnement isolé — zéro contamination entre clients.",
+    color: '#06B6D4',
   },
 ];
 
-const TRUST_BADGES = [
-  'RGPD conforme',
-  'Données hébergées en UE',
-  'EU AI Act conforme',
-  'NDA systématique sur tous les projets',
-];
-
 export function PrivacySection() {
+  const ref = useRef<HTMLElement>(null);
+  const inView = useInView(ref, { once: true, margin: '-60px' });
+
   return (
-    <section id="confiance" className="py-24 px-6">
-      <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-14 space-y-3">
-          <Badge variant="secondary" className="text-xs">Confiance & Sécurité</Badge>
-          <h2 className="text-3xl sm:text-4xl font-bold text-white">
-            Vos données, notre responsabilité
-          </h2>
-          <p className="text-zinc-400 max-w-xl mx-auto">
-            RGPD, EU AI Act, hébergement en UE, NDA systématique. Choisissez le niveau de protection adapté à votre projet.
-          </p>
-        </div>
+    <section id="confiance" ref={ref} className="py-28 px-6">
+      <div className="max-w-7xl mx-auto">
 
-        {/* Trust badges */}
-        <div className="flex flex-wrap justify-center gap-3 mb-10">
-          {TRUST_BADGES.map((label) => (
-            <div key={label} className="flex items-center gap-2 px-4 py-2 rounded-full bg-zinc-900/60 border border-zinc-800 text-xs text-zinc-400">
-              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" />
-              {label}
-            </div>
-          ))}
-        </div>
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          className="mb-16"
+        >
+          <span className="inline-block text-xs font-semibold uppercase tracking-widest text-[#3B82F6] mb-4">
+            Confiance & Sécurité
+          </span>
+          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4">
+            <h2 className="font-display text-4xl sm:text-5xl font-bold text-white leading-tight max-w-lg">
+              Vos données,{' '}
+              <span className="text-gradient-blue">notre responsabilité</span>
+            </h2>
+            <p className="text-[#8B95A7] max-w-sm lg:text-right leading-relaxed">
+              RGPD, EU AI Act, hébergement en UE, NDA systématique. La confiance n&apos;est pas une option — c&apos;est notre engagement fondamental.
+            </p>
+          </div>
+        </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-          {MODES.map((mode) => {
-            const Icon = mode.icon;
-            return (
-              <div
-                key={mode.label}
-                className={cn(
-                  'flex flex-col gap-5 p-6 rounded-2xl',
-                  'bg-zinc-900/60 border border-zinc-800',
-                  'transition-all duration-300 hover:bg-zinc-900',
-                  mode.border
-                )}
-              >
-                <div className="flex items-center justify-between">
-                  <div className={cn('p-2.5 rounded-xl bg-zinc-800 w-fit', mode.color)}>
+        {/* Cards grid: 2 + 3 */}
+        <div className="space-y-4">
+          {/* Row 1 — 2 cards */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {TRUST_CARDS.slice(0, 2).map((card, index) => {
+              const Icon = card.icon;
+              return (
+                <motion.div
+                  key={card.title}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={inView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.55, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
+                  className="flex flex-col gap-4 p-7 rounded-2xl bg-[#111827] border border-white/[0.08] hover:border-white/[0.14] hover:bg-[#172033] transition-all duration-300 group"
+                >
+                  <div
+                    className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
+                    style={{ backgroundColor: `${card.color}14`, color: card.color }}
+                  >
                     <Icon className="w-5 h-5" />
                   </div>
-                  <Badge variant={mode.badgeVariant} className="text-[10px]">{mode.badge}</Badge>
-                </div>
-                <div className="space-y-1.5">
-                  <h3 className={cn('font-semibold text-base', mode.color)}>{mode.label}</h3>
-                  <p className="text-zinc-400 text-sm leading-relaxed">{mode.description}</p>
-                </div>
-                <ul className="space-y-1.5 mt-auto">
-                  {mode.features.map(f => (
-                    <li key={f} className="flex items-center gap-2 text-xs text-zinc-500">
-                      <span className={cn('w-1 h-1 rounded-full flex-shrink-0', mode.dotColor)} />
-                      {f}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            );
-          })}
+                  <div>
+                    <h3 className="font-display text-base font-semibold text-white mb-2">{card.title}</h3>
+                    <p className="text-sm text-[#8B95A7] leading-relaxed">{card.description}</p>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
+
+          {/* Row 2 — 3 cards */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {TRUST_CARDS.slice(2).map((card, index) => {
+              const Icon = card.icon;
+              return (
+                <motion.div
+                  key={card.title}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={inView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.55, delay: (index + 2) * 0.1, ease: [0.22, 1, 0.36, 1] }}
+                  className="flex flex-col gap-4 p-7 rounded-2xl bg-[#111827] border border-white/[0.08] hover:border-white/[0.14] hover:bg-[#172033] transition-all duration-300 group"
+                >
+                  <div
+                    className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
+                    style={{ backgroundColor: `${card.color}14`, color: card.color }}
+                  >
+                    <Icon className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h3 className="font-display text-base font-semibold text-white mb-2">{card.title}</h3>
+                    <p className="text-sm text-[#8B95A7] leading-relaxed">{card.description}</p>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
         </div>
+
+        {/* Bottom compliance row */}
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.5, delay: 0.55 }}
+          className="mt-10 flex flex-wrap justify-center gap-3"
+        >
+          {['RGPD conforme', 'EU AI Act', 'Données hébergées en UE', 'NDA systématique', 'ISO 27001 best practices'].map((badge) => (
+            <span
+              key={badge}
+              className="flex items-center gap-1.5 px-3.5 py-2 rounded-full text-xs font-medium text-[#B6C2D1] bg-[#111827] border border-white/[0.08]"
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-[#22C55E]" />
+              {badge}
+            </span>
+          ))}
+        </motion.div>
       </div>
     </section>
   );

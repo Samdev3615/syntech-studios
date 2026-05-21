@@ -1,0 +1,38 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - banner [ref=e3]:
+      - generic [ref=e4]:
+        - img "SynTech Studios" [ref=e5]
+        - generic [ref=e6]: · Assistant Projet
+      - generic [ref=e40]:
+        - img [ref=e41]
+        - generic [ref=e43]: Démo
+    - generic [ref=e45]:
+      - img [ref=e46]
+      - generic [ref=e48]: Request failed
+      - button "✕" [ref=e49] [cursor=pointer]
+    - main [ref=e7]:
+      - generic [ref=e9]:
+        - generic [ref=e10]:
+          - heading "Assistant de Cadrage Projet" [level=1] [ref=e11]
+          - paragraph [ref=e12]: Décrivez votre projet à notre IA et obtenez un cahier des charges structuré en quelques minutes.
+        - generic [ref=e13]:
+          - button "Mode Démo Idéal pour découvrir. Données non sauvegardées, session de 30 min. Commencer →" [ref=e14] [cursor=pointer]:
+            - img [ref=e16]
+            - generic [ref=e18]:
+              - heading "Mode Démo" [level=3] [ref=e19]
+              - paragraph [ref=e20]: Idéal pour découvrir. Données non sauvegardées, session de 30 min.
+            - generic [ref=e21]: Commencer →
+          - button "Mode Privé Données chiffrées et supprimées automatiquement après 2 heures. Commencer →" [ref=e22] [cursor=pointer]:
+            - img [ref=e24]
+            - generic [ref=e26]:
+              - heading "Mode Privé" [level=3] [ref=e27]
+              - paragraph [ref=e28]: Données chiffrées et supprimées automatiquement après 2 heures.
+            - generic [ref=e29]: Commencer →
+          - button "Mode Confidentiel NDA électronique signé. Données persistantes et protégées juridiquement. Commencer →" [ref=e30] [cursor=pointer]:
+            - img [ref=e32]
+            - generic [ref=e35]:
+              - heading "Mode Confidentiel" [level=3] [ref=e36]
+              - paragraph [ref=e37]: NDA électronique signé. Données persistantes et protégées juridiquement.
+            - generic [ref=e38]: Commencer →
+  - alert [ref=e39]

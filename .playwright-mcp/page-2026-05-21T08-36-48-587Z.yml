@@ -1,0 +1,28 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - banner [ref=e3]:
+      - generic [ref=e4]:
+        - generic [ref=e5]:
+          - img "SynTech Studios" [ref=e6]
+          - generic [ref=e7]: · Assistant Projet
+        - generic [ref=e42]:
+          - img [ref=e43]
+          - generic [ref=e45]: Démo
+    - main [ref=e8]:
+      - generic [ref=e48]:
+        - generic [ref=e49]:
+          - img [ref=e52]
+          - heading "Avez-vous déjà un cahier des charges ?" [level=2] [ref=e55]
+          - paragraph [ref=e56]: Si oui, nous l'analyserons instantanément et ne vous poserons que les questions essentielles.
+        - generic [ref=e57] [cursor=pointer]:
+          - img [ref=e58]
+          - paragraph [ref=e61]: Glissez votre fichier ici ou parcourir
+          - paragraph [ref=e62]: PDF, DOCX, TXT — max 10 Mo
+        - generic [ref=e63]:
+          - button "Choisir un document" [ref=e64] [cursor=pointer]:
+            - img [ref=e65]
+            - text: Choisir un document
+          - button "Non, partir de zéro avec l'assistant" [ref=e68] [cursor=pointer]:
+            - img [ref=e69]
+            - text: Non, partir de zéro avec l'assistant
+  - alert [ref=e40]

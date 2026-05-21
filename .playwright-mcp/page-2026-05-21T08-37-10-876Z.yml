@@ -1,0 +1,32 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - banner [ref=e3]:
+      - generic [ref=e4]:
+        - generic [ref=e5]:
+          - img "SynTech Studios" [ref=e6]
+          - generic [ref=e7]: · Assistant Projet
+        - generic [ref=e42]:
+          - img [ref=e43]
+          - generic [ref=e45]: Démo
+    - main [ref=e8]:
+      - generic [ref=e72]:
+        - generic [ref=e73]:
+          - generic [ref=e74]: IA
+          - generic [ref=e75]:
+            - generic [ref=e76]:
+              - paragraph [ref=e77]: Bonjour ! Je suis votre assistant de cadrage projet SynTech Studios.
+              - paragraph [ref=e79]: "Mode actif : démo (données non sauvegardées)."
+              - paragraph [ref=e81]: Je vais vous aider à transformer votre idée en cahier des charges structuré, prêt à transmettre à notre équipe de développement.
+              - paragraph [ref=e83]: "Pour commencer : décrivez-moi votre projet en quelques mots. Qu'est-ce que vous souhaitez créer ?"
+            - paragraph [ref=e84]: 11:37
+        - generic [ref=e85]:
+          - button "Oui" [ref=e86] [cursor=pointer]
+          - button "Non, pas encore" [ref=e87] [cursor=pointer]
+          - button "Je ne sais pas encore" [ref=e88] [cursor=pointer]
+    - contentinfo [ref=e89]:
+      - generic [ref=e90]:
+        - textbox "Décrivez votre projet…" [ref=e91]
+        - button [disabled]:
+          - img
+      - paragraph [ref=e92]: Entrée pour envoyer · Maj+Entrée pour sauter une ligne
+  - alert [ref=e40]

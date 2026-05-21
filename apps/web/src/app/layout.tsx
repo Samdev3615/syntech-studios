@@ -1,12 +1,19 @@
 import type { Metadata } from 'next'
 import type React from 'react'
-import { Inter, Fira_Code } from 'next/font/google'
+import { Inter, Sora, Fira_Code } from 'next/font/google'
 import './globals.css'
 
 const inter = Inter({
   subsets: ['latin'],
   variable: '--font-inter',
   display: 'swap',
+})
+
+const sora = Sora({
+  subsets: ['latin'],
+  variable: '--font-sora',
+  display: 'swap',
+  weight: ['300', '400', '500', '600', '700', '800'],
 })
 
 const firaCode = Fira_Code({
@@ -30,7 +37,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="fr" className={`${inter.variable} ${firaCode.variable}`}>
+    <html lang="fr" className={`${inter.variable} ${sora.variable} ${firaCode.variable}`}>
       <body className="font-sans antialiased bg-background text-foreground">
         {children}
       </body>

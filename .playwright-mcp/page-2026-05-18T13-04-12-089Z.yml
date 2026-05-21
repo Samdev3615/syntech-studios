@@ -1,0 +1,243 @@
+- generic [ref=e2]:
+  - banner [ref=e3]:
+    - generic [ref=e4]:
+      - link "SynTech Studios" [ref=e5] [cursor=pointer]:
+        - /url: /
+        - img "SynTech Studios" [ref=e6]
+      - navigation [ref=e7]:
+        - link "Nos offres" [ref=e8] [cursor=pointer]:
+          - /url: "#offres"
+        - link "Notre processus" [ref=e9] [cursor=pointer]:
+          - /url: "#processus"
+        - link "Confiance" [ref=e10] [cursor=pointer]:
+          - /url: "#confiance"
+      - link "Décrire mon projet →" [ref=e11] [cursor=pointer]:
+        - /url: /chat
+        - button "Décrire mon projet →" [ref=e12]
+  - generic [ref=e14]:
+    - generic [ref=e16]:
+      - img [ref=e17]
+      - text: Studio IA · Spécialiste PME françaises
+    - heading "L'IA opérationnelle pour votre PME." [level=1] [ref=e19]
+    - paragraph [ref=e20]: Agents IA sur-mesure, automatisation de processus, intégration dans vos outils existants. Des résultats concrets en semaines — pas en mois.
+    - generic [ref=e21]:
+      - link "Décrire mon projet" [ref=e22] [cursor=pointer]:
+        - /url: /chat
+        - button "Décrire mon projet" [ref=e23]:
+          - text: Décrire mon projet
+          - img [ref=e24]
+      - link "Voir nos offres" [ref=e26] [cursor=pointer]:
+        - /url: "#offres"
+        - button "Voir nos offres" [ref=e27]
+    - paragraph [ref=e28]: Aucune inscription · Confidentiel · Réponse sous 24h
+  - generic [ref=e30]:
+    - generic [ref=e31]:
+      - generic [ref=e32]: Nos offres
+      - heading "Des résultats mesurables, pas des promesses" [level=2] [ref=e33]
+      - paragraph [ref=e34]: Quatre formules claires pour intégrer l'IA dans votre PME — du premier audit jusqu'au déploiement d'agents autonomes.
+    - generic [ref=e35]:
+      - link "990 € · 1 semaine Audit IA En une semaine, on cartographie vos processus, identifie les 3 à 5 opportunités IA les plus rentables et vous remet un plan d'action concret avec ROI estimé. La porte d'entrée idéale pour commencer sans risque. Décrire mon projet" [ref=e37] [cursor=pointer]:
+        - /url: /chat
+        - generic [ref=e38]:
+          - generic [ref=e39]:
+            - img [ref=e41]
+            - generic [ref=e44]: 990 € · 1 semaine
+          - generic [ref=e45]:
+            - heading "Audit IA" [level=3] [ref=e46]
+            - paragraph [ref=e47]: En une semaine, on cartographie vos processus, identifie les 3 à 5 opportunités IA les plus rentables et vous remet un plan d'action concret avec ROI estimé. La porte d'entrée idéale pour commencer sans risque.
+          - generic [ref=e48]:
+            - text: Décrire mon projet
+            - img [ref=e49]
+      - generic [ref=e52]:
+        - generic [ref=e53]:
+          - img [ref=e55]
+          - generic [ref=e57]: 3 000 – 8 000 €
+        - generic [ref=e58]:
+          - heading "Pack Automatisation" [level=3] [ref=e59]
+          - paragraph [ref=e60]: On automatise 3 processus répétitifs dans votre entreprise — emails, documents, rapports, relances. Du temps retrouvé, dès la première semaine de déploiement.
+      - generic [ref=e62]:
+        - generic [ref=e63]:
+          - img [ref=e65]
+          - generic [ref=e77]: 8 000 – 20 000 €
+        - generic [ref=e78]:
+          - heading "Agent IA Métier" [level=3] [ref=e79]
+          - paragraph [ref=e80]: "Un agent IA autonome sur-mesure pour un besoin précis : support client, qualification commerciale, base de connaissance interne, assistant RH..."
+      - generic [ref=e82]:
+        - generic [ref=e83]:
+          - img [ref=e85]
+          - generic [ref=e90]: dès 800 €/mois
+        - generic [ref=e91]:
+          - heading "Retainer IA" [level=3] [ref=e92]
+          - paragraph [ref=e93]: Votre équipe IA externalisée. Amélioration continue, nouveaux agents, monitoring des performances et support prioritaire chaque mois.
+      - link "Gratuit Pas encore sûr ? Décrivez votre activité à notre assistant IA en 15 minutes. Il structure vos enjeux et génère un brief professionnel. Gratuit, sans inscription. Décrire mon projet" [ref=e95] [cursor=pointer]:
+        - /url: /chat
+        - generic [ref=e96]:
+          - generic [ref=e97]:
+            - img [ref=e99]
+            - generic [ref=e102]: Gratuit
+          - generic [ref=e103]:
+            - heading "Pas encore sûr ?" [level=3] [ref=e104]
+            - paragraph [ref=e105]: Décrivez votre activité à notre assistant IA en 15 minutes. Il structure vos enjeux et génère un brief professionnel. Gratuit, sans inscription.
+          - generic [ref=e106]:
+            - text: Décrire mon projet
+            - img [ref=e107]
+  - generic [ref=e110]:
+    - generic [ref=e111]:
+      - heading "Comment on travaille" [level=2] [ref=e112]
+      - paragraph [ref=e113]: Un processus clair, des livrables concrets à chaque étape, aucune surprise.
+    - generic [ref=e116]:
+      - generic [ref=e117]:
+        - generic [ref=e118]:
+          - img [ref=e120]
+          - generic [ref=e122]: "1"
+        - generic [ref=e123]:
+          - heading "Décrivez votre projet" [level=3] [ref=e124]
+          - paragraph [ref=e125]: Via notre assistant IA en 15 minutes. On reçoit un brief structuré de votre activité, vos enjeux et vos objectifs.
+      - generic [ref=e126]:
+        - generic [ref=e127]:
+          - img [ref=e129]
+          - generic [ref=e132]: "2"
+        - generic [ref=e133]:
+          - heading "Audit & Proposition" [level=3] [ref=e134]
+          - paragraph [ref=e135]: On analyse vos processus, identifie les leviers IA les plus rentables et vous présente un plan concret avec chiffrage et ROI estimé.
+      - generic [ref=e136]:
+        - generic [ref=e137]:
+          - img [ref=e139]
+          - generic [ref=e143]: "3"
+        - generic [ref=e144]:
+          - heading "Développement agile" [level=3] [ref=e145]
+          - paragraph [ref=e146]: Livraisons toutes les deux semaines. Vous voyez les résultats rapidement et gardez le contrôle à chaque étape.
+      - generic [ref=e147]:
+        - generic [ref=e148]:
+          - img [ref=e150]
+          - generic [ref=e153]: "4"
+        - generic [ref=e154]:
+          - heading "Suivi & Optimisation" [level=3] [ref=e155]
+          - paragraph [ref=e156]: Monitoring continu, ajustements, nouveaux agents. Votre IA évolue avec votre entreprise.
+  - generic [ref=e158]:
+    - generic [ref=e159]:
+      - generic [ref=e160]: Confiance & Sécurité
+      - heading "Vos données, notre responsabilité" [level=2] [ref=e161]
+      - paragraph [ref=e162]: RGPD, EU AI Act, hébergement en UE, NDA systématique. Choisissez le niveau de protection adapté à votre projet.
+    - generic [ref=e163]:
+      - generic [ref=e164]:
+        - img [ref=e165]
+        - text: RGPD conforme
+      - generic [ref=e168]:
+        - img [ref=e169]
+        - text: Données hébergées en UE
+      - generic [ref=e172]:
+        - img [ref=e173]
+        - text: EU AI Act conforme
+      - generic [ref=e176]:
+        - img [ref=e177]
+        - text: NDA systématique sur tous les projets
+    - generic [ref=e180]:
+      - generic [ref=e181]:
+        - generic [ref=e182]:
+          - img [ref=e184]
+          - generic [ref=e186]: Gratuit
+        - generic [ref=e187]:
+          - heading "Mode Démo" [level=3] [ref=e188]
+          - paragraph [ref=e189]: Idéal pour découvrir l'assistant. Session de 30 minutes, données non persistées.
+        - list [ref=e190]:
+          - listitem [ref=e191]: Accès immédiat
+          - listitem [ref=e193]: Sans inscription
+          - listitem [ref=e195]: Session 30 min
+      - generic [ref=e197]:
+        - generic [ref=e198]:
+          - img [ref=e200]
+          - generic [ref=e202]: Recommandé
+        - generic [ref=e203]:
+          - heading "Mode Privé" [level=3] [ref=e204]
+          - paragraph [ref=e205]: Données chiffrées en transit et au repos. Suppression automatique après 2 heures.
+        - list [ref=e206]:
+          - listitem [ref=e207]: Chiffrement AES-256
+          - listitem [ref=e209]: Suppression auto 2h
+          - listitem [ref=e211]: Sans trace
+      - generic [ref=e213]:
+        - generic [ref=e214]:
+          - img [ref=e216]
+          - generic [ref=e219]: NDA
+        - generic [ref=e220]:
+          - heading "Mode Confidentiel" [level=3] [ref=e221]
+          - paragraph [ref=e222]: Accord de confidentialité électronique signé. Données persistantes et protégées juridiquement.
+        - list [ref=e223]:
+          - listitem [ref=e224]: NDA électronique
+          - listitem [ref=e226]: Données persistantes
+          - listitem [ref=e228]: Protection juridique
+  - generic [ref=e231]:
+    - generic [ref=e232]:
+      - generic [ref=e233]:
+        - paragraph [ref=e234]: 90 j
+        - paragraph [ref=e235]: Pour un premier ROI mesurable
+      - generic [ref=e236]:
+        - paragraph [ref=e237]: 100%
+        - paragraph [ref=e238]: RGPD & EU AI Act conforme
+      - generic [ref=e239]:
+        - paragraph [ref=e240]: < 1 sem
+        - paragraph [ref=e241]: Pour recevoir votre Audit IA
+      - generic [ref=e242]:
+        - paragraph [ref=e243]: France
+        - paragraph [ref=e244]: Équipe et données hébergées en UE
+    - generic [ref=e249]:
+      - heading "Prêt à prendre de l'avance sur vos concurrents ?" [level=2] [ref=e250]
+      - paragraph [ref=e251]: Décrivez votre projet en 15 minutes. On revient vers vous sous 24h avec une proposition concrète.
+      - link "Décrire mon projet" [ref=e252] [cursor=pointer]:
+        - /url: /chat
+        - button "Décrire mon projet" [ref=e253]:
+          - text: Décrire mon projet
+          - img [ref=e254]
+      - paragraph [ref=e256]: Aucune inscription · Confidentiel · Réponse sous 24h
+  - contentinfo [ref=e257]:
+    - generic [ref=e258]:
+      - generic [ref=e259]:
+        - generic [ref=e260]:
+          - link "SynTech Studios" [ref=e261] [cursor=pointer]:
+            - /url: /
+            - img "SynTech Studios" [ref=e262]
+          - paragraph [ref=e263]: Studio IA spécialisé PME françaises. Agents sur-mesure, automatisation, intégration — livrés en semaines.
+        - generic [ref=e264]:
+          - paragraph [ref=e265]: Offres
+          - list [ref=e266]:
+            - listitem [ref=e267]:
+              - link "Audit IA" [ref=e268] [cursor=pointer]:
+                - /url: "#offres"
+            - listitem [ref=e269]:
+              - link "Pack Automatisation" [ref=e270] [cursor=pointer]:
+                - /url: "#offres"
+            - listitem [ref=e271]:
+              - link "Agent IA Métier" [ref=e272] [cursor=pointer]:
+                - /url: "#offres"
+            - listitem [ref=e273]:
+              - link "Retainer IA" [ref=e274] [cursor=pointer]:
+                - /url: "#offres"
+        - generic [ref=e275]:
+          - paragraph [ref=e276]: Studio
+          - list [ref=e277]:
+            - listitem [ref=e278]:
+              - link "Notre processus" [ref=e279] [cursor=pointer]:
+                - /url: "#processus"
+            - listitem [ref=e280]:
+              - link "Confiance & RGPD" [ref=e281] [cursor=pointer]:
+                - /url: "#confiance"
+            - listitem [ref=e282]:
+              - link "Assistant IA" [ref=e283] [cursor=pointer]:
+                - /url: /chat
+        - generic [ref=e284]:
+          - paragraph [ref=e285]: Contact
+          - list [ref=e286]:
+            - listitem [ref=e287]:
+              - link "contact@syntechstudios.fr" [ref=e288] [cursor=pointer]:
+                - /url: mailto:contact@syntechstudios.fr
+            - listitem [ref=e289]:
+              - link "Décrire mon projet →" [ref=e290] [cursor=pointer]:
+                - /url: /chat
+      - generic [ref=e291]:
+        - paragraph [ref=e292]: © 2026 SynTech Studios. Tous droits réservés.
+        - generic [ref=e293]:
+          - generic [ref=e294]: RGPD conforme
+          - generic [ref=e295]: ·
+          - generic [ref=e296]: Données hébergées en UE
+          - generic [ref=e297]: ·
+          - generic [ref=e298]: EU AI Act conforme
