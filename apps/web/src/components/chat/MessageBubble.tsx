@@ -1,10 +1,11 @@
 'use client';
+import { type ReactNode } from 'react';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import type { Message } from '@/hooks/useChat';
 
 // ─── Markdown renderer léger ──────────────────────────────────────────────────
-function renderInline(text: string): React.ReactNode {
+function renderInline(text: string): ReactNode {
   const parts = text.split(/(\*\*[^*]+\*\*|\*[^*]+\*|`[^`]+`)/);
   return parts.map((part, i) => {
     if (part.startsWith('**') && part.endsWith('**'))
@@ -17,9 +18,9 @@ function renderInline(text: string): React.ReactNode {
   });
 }
 
-function renderMarkdown(text: string): React.ReactNode {
+function renderMarkdown(text: string): ReactNode {
   const lines = text.split('\n');
-  const nodes: React.ReactNode[] = [];
+  const nodes: ReactNode[] = [];
   let listItems: string[] = [];
 
   const flushList = (key: string) => {
@@ -101,7 +102,7 @@ function extractQuickReplies(content: string): string[] {
 interface MessageBubbleProps {
   message: Message;
   isLastAssistant?: boolean;
-  onQuickReply?: (text: string) => void;
+  onQuickReply?: (_text: string) => void;
   disabled?: boolean;
 }
 

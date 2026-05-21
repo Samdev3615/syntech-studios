@@ -1,11 +1,11 @@
 'use client';
-import { useRef, useState } from 'react';
+import { useRef, useState, type DragEvent } from 'react';
 import { motion } from 'framer-motion';
 import { FileText, MessageSquare, Upload, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 interface DocCheckStepProps {
-  onUpload: (file: File) => void;
+  onUpload: (_file: File) => void;
   onSkip: () => void;
   isLoading: boolean;
 }
@@ -21,7 +21,7 @@ export function DocCheckStep({ onUpload, onSkip, isLoading }: DocCheckStepProps)
     setSelectedFile(file);
   };
 
-  const handleDrop = (e: React.DragEvent) => {
+  const handleDrop = (e: DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     setDragging(false);
     const file = e.dataTransfer.files[0];
@@ -62,7 +62,7 @@ export function DocCheckStep({ onUpload, onSkip, isLoading }: DocCheckStepProps)
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.15 }}
-            onDragOver={(e) => { e.preventDefault(); setDragging(true); }}
+            onDragOver={(e: DragEvent<HTMLDivElement>) => { e.preventDefault(); setDragging(true); }}
             onDragLeave={() => setDragging(false)}
             onDrop={handleDrop}
             onClick={() => inputRef.current?.click()}
