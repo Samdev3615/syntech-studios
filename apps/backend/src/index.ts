@@ -14,25 +14,10 @@ dotenv.config();
 const app: express.Application = express();
 const PORT = process.env.PORT ?? 3001;
 const FRONTEND_URL = process.env.FRONTEND_URL ?? 'http://localhost:3000';
-const CORS_ORIGINS = process.env.CORS_ORIGINS ?? '';
-
-const allowedOrigins = [
-  FRONTEND_URL,
-  ...CORS_ORIGINS.split(',').map(o => o.trim()).filter(Boolean),
-  'http://localhost:3000',
-  'http://localhost:3001',
-].filter(Boolean);
-
 // ─── Sécurité ─────────────────────────────────────────────────────────────────
 app.use(helmet());
 app.use(cors({
-  origin: (origin, callback) => {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error(`CORS: origin not allowed — ${origin}`));
-    }
-  },
+  origin: true,
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
