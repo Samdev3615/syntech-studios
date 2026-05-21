@@ -37,7 +37,7 @@ export function ChatInterface() {
     chatState, messages, streamingContent, isTyping,
     sessionId, privacyMode, ndaId,
     briefResult, error, isLoading,
-    userMessageCount, progressPct, minExchanges,
+    userMessageCount, progressPct, minExchanges, lastSuggestions,
     selectMode, submitNDAForm, handleAcceptNDA,
     skipDocAndStart, uploadDocAndStart,
     sendMessage, generateBrief, clearError,
@@ -240,6 +240,7 @@ export function ChatInterface() {
                   key={msg.id}
                   message={msg}
                   isLastAssistant={msg.id === lastAssistantId && msg.id !== 'welcome' && !streamingContent && !isTyping}
+                  suggestions={msg.id === lastAssistantId ? lastSuggestions : []}
                   onQuickReply={handleQuickReply}
                   disabled={isLoading || chatState === 'brief-ready'}
                 />

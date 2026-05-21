@@ -45,6 +45,7 @@ export function useChat() {
   const [briefResult,      setBriefResult]      = useState<BriefResult | null>(null);
   const [error,            setError]            = useState<string | null>(null);
   const [isLoading,        setIsLoading]        = useState(false);
+  const [lastSuggestions,  setLastSuggestions]  = useState<string[]>([]);
 
   const socketRef = useRef<Socket | null>(null);
 
@@ -80,13 +81,15 @@ export function useChat() {
       setStreamingContent(prev => prev + delta);
     });
 
-    socket.on('chat:response', ({ assistantMessage, briefReady }: {
+    socket.on('chat:response', ({ assistantMessage, briefReady, suggestions }: {
       userMessage: Message;
       assistantMessage: Message;
       briefReady: boolean;
+      suggestions?: string[];
     }) => {
       setMessages(prev => [...prev, assistantMessage]);
       setStreamingContent('');
+      setLastSuggestions(suggestions ?? []);
       if (briefReady) setChatState('brief-ready');
     });
 
@@ -210,6 +213,7 @@ export function useChat() {
     };
     setMessages(prev => [...prev, tempMsg]);
     setError(null);
+    setLastSuggestions([]);
     socketRef.current.emit('chat:message', { content: content.trim() });
   }, []);
 
@@ -239,6 +243,7 @@ export function useChat() {
     userMessageCount,
     progressPct,
     minExchanges: MIN_EXCHANGES,
+    lastSuggestions,
     selectMode,
     submitNDAForm,
     handleAcceptNDA,

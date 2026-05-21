@@ -6,6 +6,19 @@ import { BriefService } from '../services/brief.service.js';
 import { logger } from '../middleware/logger.middleware.js';
 import { AppError } from '../middleware/error.middleware.js';
 
+// ─── Parse les suggestions de réponse rapide générées par Claude ─────────────
+function parseSuggestions(content: string): { cleanContent: string; suggestions: string[] } {
+  const lines = content.split('\n');
+  const lastLine = lines[lines.length - 1]?.trim() ?? '';
+  if (lastLine.startsWith('SUGGESTIONS:')) {
+    const raw = lastLine.replace('SUGGESTIONS:', '').trim();
+    const suggestions = raw.split('|').map(s => s.trim()).filter(s => s.length > 0);
+    const cleanContent = lines.slice(0, -1).join('\n').trimEnd();
+    return { cleanContent, suggestions };
+  }
+  return { cleanContent: content, suggestions: [] };
+}
+
 // ─── Rate limiting (par session) ──────────────────────────────────────────────
 const MAX_MESSAGES_PER_MINUTE = 30;
 const RATE_WINDOW_MS = 60_000;
@@ -103,12 +116,14 @@ export function setupWebSocket(httpServer: HTTPServer, frontendUrl: string): Soc
           socket.emit('chat:chunk', { delta });
         });
 
-        // 3. Fin du stream + réponse complète
+        // 3. Fin du stream + réponse complète (avec suggestions parsées)
         socket.emit('chat:typing', { isTyping: false });
+        const { cleanContent, suggestions } = parseSuggestions(result.assistantMessage.content);
         socket.emit('chat:response', {
           userMessage: result.userMessage,
-          assistantMessage: result.assistantMessage,
+          assistantMessage: { ...result.assistantMessage, content: cleanContent },
           briefReady: result.briefReady,
+          suggestions,
         });
 
         // 4. Notification si le brief est prêt

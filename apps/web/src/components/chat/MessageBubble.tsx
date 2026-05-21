@@ -72,46 +72,18 @@ function renderMarkdown(text: string): ReactNode {
   return <div className="space-y-0.5 text-sm">{nodes}</div>;
 }
 
-// ─── Quick replies ────────────────────────────────────────────────────────────
-function extractQuickReplies(content: string): string[] {
-  const lines = content.split('\n').filter(l => l.trim());
-  const lastLine = lines[lines.length - 1] ?? '';
-  if (!lastLine.includes('?')) return [];
-
-  const lower = lastLine.toLowerCase();
-
-  // Oui/Non uniquement pour les vraies questions binaires (pas "qu'est-ce que")
-  if (/\b(avez-vous|êtes-vous|disposez-vous|possédez-vous|est-ce que vous)\b/.test(lower))
-    return ['Oui', 'Non, pas encore', 'Je ne sais pas encore'];
-
-  if (/\b(budget|coût|montant|prix|financement)\b/.test(lower))
-    return ['< 5 000 €', '5 000 – 20 000 €', '> 20 000 €', 'Non défini'];
-
-  if (/\b(délai|deadline|livraison|durée|calendrier|quand)\b/.test(lower))
-    return ['1–3 mois', '3–6 mois', '6–12 mois', 'Flexible'];
-
-  if (/\b(technologie|stack|framework|langage|outil)\b/.test(lower))
-    return ["Pas de préférence", "J'ai des contraintes techniques", "À vous de conseiller"];
-
-  if (/\b(cible|utilisateur|audience|client|marché)\b/.test(lower))
-    return ["Grand public", "Professionnels B2B", "Interne (salariés)", "Niche spécifique"];
-
-  return ['Oui, exactement', 'Pas tout à fait', 'Je vais préciser…'];
-}
-
 // ─── Composants ──────────────────────────────────────────────────────────────
 interface MessageBubbleProps {
   message: Message;
   isLastAssistant?: boolean;
+  suggestions?: string[];
   onQuickReply?: (_text: string) => void;
   disabled?: boolean;
 }
 
-export function MessageBubble({ message, isLastAssistant, onQuickReply, disabled }: MessageBubbleProps) {
+export function MessageBubble({ message, isLastAssistant, suggestions, onQuickReply, disabled }: MessageBubbleProps) {
   const isUser = message.role === 'user';
-  const quickReplies = isLastAssistant && !isUser && onQuickReply
-    ? extractQuickReplies(message.content)
-    : [];
+  const quickReplies = isLastAssistant && !isUser && suggestions?.length ? suggestions : [];
 
   return (
     <motion.div
@@ -175,6 +147,9 @@ export function MessageBubble({ message, isLastAssistant, onQuickReply, disabled
 
 // Message en cours de streaming
 export function StreamingBubble({ content }: { content: string }) {
+  // Masquer la ligne SUGGESTIONS pendant le streaming
+  const display = content.split('\n').filter(l => !l.trimStart().startsWith('SUGGESTIONS:')).join('\n').trimEnd();
+
   return (
     <motion.div
       initial={{ opacity: 0, x: -20 }}
@@ -186,7 +161,7 @@ export function StreamingBubble({ content }: { content: string }) {
         IA
       </div>
       <div className="max-w-[75%] rounded-2xl rounded-bl-sm px-4 py-3 bg-zinc-800/80 border border-zinc-700/50 text-zinc-100">
-        {renderMarkdown(content)}
+        {renderMarkdown(display)}
         <span className="inline-block w-0.5 h-3.5 bg-ocean ml-0.5 animate-pulse align-middle" />
       </div>
     </motion.div>
