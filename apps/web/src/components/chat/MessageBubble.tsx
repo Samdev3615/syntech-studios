@@ -80,7 +80,8 @@ function extractQuickReplies(content: string): string[] {
 
   const lower = lastLine.toLowerCase();
 
-  if (/\b(avez-vous|est-ce que|est-ce|êtes-vous|disposez-vous|possédez-vous|avez)\b/.test(lower))
+  // Oui/Non uniquement pour les vraies questions binaires (pas "qu'est-ce que")
+  if (/\b(avez-vous|êtes-vous|disposez-vous|possédez-vous|est-ce que vous)\b/.test(lower))
     return ['Oui', 'Non, pas encore', 'Je ne sais pas encore'];
 
   if (/\b(budget|coût|montant|prix|financement)\b/.test(lower))

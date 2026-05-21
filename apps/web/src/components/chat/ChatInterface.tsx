@@ -239,7 +239,7 @@ export function ChatInterface() {
                 <MessageBubble
                   key={msg.id}
                   message={msg}
-                  isLastAssistant={msg.id === lastAssistantId && !streamingContent && !isTyping}
+                  isLastAssistant={msg.id === lastAssistantId && msg.id !== 'welcome' && !streamingContent && !isTyping}
                   onQuickReply={handleQuickReply}
                   disabled={isLoading || chatState === 'brief-ready'}
                 />
