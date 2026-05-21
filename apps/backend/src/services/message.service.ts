@@ -18,42 +18,38 @@ export interface MessageData {
 // Cache Redis des messages pour les sessions actives (TTL = session TTL)
 const MESSAGE_CACHE_TTL = 2 * 60 * 60; // 2h
 
+// Messages DEMO : en mémoire (les sessions démo ne sont pas en DB → pas de FK)
+const demoMessages = new Map<string, MessageData[]>();
+
 export class MessageService {
 
   async add(sessionId: string, role: MessageRole, content: string): Promise<MessageData> {
     const id = randomUUID();
     const now = new Date();
 
-    const msg: MessageData = {
-      id,
-      sessionId,
-      role,
-      content,
-      timestamp: now.toISOString(),
-    };
+    const msg: MessageData = { id, sessionId, role, content, timestamp: now.toISOString() };
 
-    // Persiste en DB (pour toutes les sessions, pas seulement NDA)
-    await db.insert(messages).values({
-      id,
-      sessionId,
-      role,
-      content,
-      timestamp: now,
-    });
+    try {
+      await db.insert(messages).values({ id, sessionId, role, content, timestamp: now });
+      await redisHelpers.setMessage(id, msg, MESSAGE_CACHE_TTL);
+    } catch {
+      // Session démo (non présente en DB) → stockage en mémoire
+      const list = demoMessages.get(sessionId) ?? [];
+      list.push(msg);
+      demoMessages.set(sessionId, list);
+    }
 
-    // Cache dans Redis pour accès rapide
-    await redisHelpers.setMessage(id, msg, MESSAGE_CACHE_TTL);
-
-    // Ajoute à la liste Redis de la session pour récup en ordre
-    // (liste FIFO des IDs de messages de la session)
-    // Note : redisHelpers ne supporte pas lPush directement, on utilise redis
     logger.info(`[Message] Added ${role} message to session ${sessionId}`);
-
     return msg;
   }
 
   async getBySession(sessionId: string): Promise<MessageData[]> {
-    // Récupère directement depuis DB (source de vérité)
+    // Sessions démo → mémoire
+    if (demoMessages.has(sessionId)) {
+      return demoMessages.get(sessionId) ?? [];
+    }
+
+    // Sessions private/NDA → DB
     const rows = await db
       .select()
       .from(messages)
