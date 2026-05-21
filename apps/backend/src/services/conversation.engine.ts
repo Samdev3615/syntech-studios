@@ -71,6 +71,7 @@ export class ConversationEngine {
     const assistantContent = await this.openai.complete(openaiMessages, {
       temperature: 0.7,
       maxTokens: 800,
+      sessionId,
     });
 
     // 5. Sauvegarde la réponse IA
@@ -108,7 +109,7 @@ export class ConversationEngine {
       },
     ];
 
-    const analysis = await this.openai.complete(messages, { temperature: 0.5, maxTokens: 1200 });
+    const analysis = await this.openai.complete(messages, { temperature: 0.5, maxTokens: 1200, sessionId });
 
     // Sauvegarde l'analyse en tant que message assistant
     await this.messageService.add(sessionId, 'assistant', analysis);
@@ -136,7 +137,7 @@ export class ConversationEngine {
       { role: 'user', content: `Conversation à analyser :\n\n${conversation}` },
     ];
 
-    const rawBrief = await this.openai.complete(messages, { temperature: 0.3, maxTokens: 2000 });
+    const rawBrief = await this.openai.complete(messages, { temperature: 0.3, maxTokens: 2000, sessionId });
 
     try {
       const brief = JSON.parse(rawBrief) as Record<string, unknown>;
@@ -174,6 +175,7 @@ export class ConversationEngine {
     const fullContent = await this.openai.streamWithCallback(openaiMessages, onChunk, {
       temperature: 0.7,
       maxTokens: 800,
+      sessionId,
     });
 
     // 5. Sauvegarde la réponse complète

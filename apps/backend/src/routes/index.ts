@@ -6,6 +6,7 @@ import { chatRouter } from './chat.routes.js';
 import { fileRouter } from './file.routes.js';
 import { briefRouter } from './brief.routes.js';
 import { ndaRouter } from './nda.routes.js';
+import { costRouter } from './cost.routes.js';
 
 export const apiRouter: ExpressRouter = Router();
 
@@ -19,3 +20,4 @@ apiRouter.use('/api/v1/chat', chatRouter);
 apiRouter.use('/api/v1/files', fileRouter);
 apiRouter.use('/api/v1/briefs', briefRouter);
 apiRouter.use('/api/v1/nda', ndaRouter);
+apiRouter.use('/api/v1/cost', costRouter);

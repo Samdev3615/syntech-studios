@@ -4,6 +4,7 @@ import type { Response } from 'express';
 import { env } from '../config/env.js';
 import { logger } from '../middleware/logger.middleware.js';
 import { AppError } from '../middleware/error.middleware.js';
+import { trackUsage } from './cost.tracker.js';
 
 export interface ChatMessage {
   role: 'system' | 'user' | 'assistant';
@@ -14,6 +15,7 @@ export interface ChatOptions {
   temperature?: number;
   maxTokens?: number;
   stream?: boolean;
+  sessionId?: string;
 }
 
 const client = new Anthropic({ apiKey: env.ANTHROPIC_API_KEY });
@@ -45,7 +47,7 @@ export class ClaudeService {
 
   // ─── Completion simple (sans streaming) ────────────────────────────────────
   async complete(messages: ChatMessage[], options: ChatOptions = {}): Promise<string> {
-    const { maxTokens = 1500 } = options;
+    const { maxTokens = 1500, sessionId } = options;
     const { system, messages: msgs } = toAnthropicParams(messages);
 
     try {
@@ -64,7 +66,13 @@ export class ClaudeService {
 
       if (!text) throw new Error('Empty response from Claude');
 
-      logger.info(`[Claude] Completion — ${response.usage.input_tokens + response.usage.output_tokens} tokens`);
+      const { input_tokens, output_tokens } = response.usage;
+      if (sessionId) {
+        const usage = trackUsage(sessionId, this.model, input_tokens, output_tokens);
+        logger.info(`[Claude] Completion — ${input_tokens + output_tokens} tokens | session cost: $${usage.costUSD.toFixed(4)}`);
+      } else {
+        logger.info(`[Claude] Completion — ${input_tokens + output_tokens} tokens`);
+      }
       return text;
 
     } catch (err: unknown) {
@@ -126,7 +134,7 @@ export class ClaudeService {
     onChunk: (delta: string) => void,
     options: ChatOptions = {}
   ): Promise<string> {
-    const { maxTokens = 800 } = options;
+    const { maxTokens = 800, sessionId } = options;
     const { system, messages: msgs } = toAnthropicParams(messages);
 
     let fullContent = '';
@@ -148,7 +156,14 @@ export class ClaudeService {
         }
       }
 
-      logger.info(`[Claude] WS stream completed`);
+      const finalMsg = await stream.finalMessage();
+      const { input_tokens, output_tokens } = finalMsg.usage;
+      if (sessionId) {
+        const usage = trackUsage(sessionId, this.model, input_tokens, output_tokens);
+        logger.info(`[Claude] WS stream — ${input_tokens + output_tokens} tokens | session cost: $${usage.costUSD.toFixed(4)}`);
+      } else {
+        logger.info(`[Claude] WS stream completed`);
+      }
       return fullContent;
 
     } catch (err: unknown) {
