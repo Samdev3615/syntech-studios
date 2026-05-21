@@ -1,7 +1,7 @@
-import { Router } from 'express';
+import { Router, type IRouter } from 'express';
 import { getSessionUsage, getAllSessions } from '../services/cost.tracker.js';
 
-export const costRouter = Router();
+export const costRouter: IRouter = Router();
 
 // GET /api/v1/cost — toutes les sessions
 costRouter.get('/', (_req, res) => {

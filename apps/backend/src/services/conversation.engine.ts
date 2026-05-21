@@ -196,6 +196,33 @@ export class ConversationEngine {
     };
   }
 
+  // ─── Générer des suggestions de réponse rapide ───────────────────────────
+  async generateSuggestions(assistantMessage: string): Promise<string[]> {
+    // Extrait la dernière question du message
+    const lastQuestion = assistantMessage
+      .split(/(?<=[.!])\s+/)
+      .filter(s => s.includes('?'))
+      .pop() ?? assistantMessage.slice(-300);
+
+    const result = await this.openai.complete([
+      {
+        role: 'user',
+        content: `Un assistant de cadrage projet a posé cette question à un client :
+"${lastQuestion.trim()}"
+
+Génère 3 suggestions de réponse courtes et précises en français, adaptées à cette question.
+Format strict : suggestion1 | suggestion2 | suggestion3
+Réponds UNIQUEMENT avec les suggestions séparées par |, sans texte avant ou après.`,
+      },
+    ], { temperature: 0.4, maxTokens: 80 });
+
+    return result
+      .split('|')
+      .map(s => s.trim())
+      .filter(s => s.length > 2 && s.length < 55)
+      .slice(0, 4);
+  }
+
   // ─── Streaming vers le client HTTP (SSE) ──────────────────────────────────
   async streamMessage(
     sessionId: string,

@@ -9,12 +9,15 @@ import { AppError } from '../middleware/error.middleware.js';
 // ─── Parse les suggestions de réponse rapide générées par Claude ─────────────
 function parseSuggestions(content: string): { cleanContent: string; suggestions: string[] } {
   const lines = content.split('\n');
-  const lastLine = lines[lines.length - 1]?.trim() ?? '';
-  if (lastLine.startsWith('SUGGESTIONS:')) {
-    const raw = lastLine.replace('SUGGESTIONS:', '').trim();
-    const suggestions = raw.split('|').map(s => s.trim()).filter(s => s.length > 0);
-    const cleanContent = lines.slice(0, -1).join('\n').trimEnd();
-    return { cleanContent, suggestions };
+  // Cherche SUGGESTIONS: dans les 3 dernières lignes (robustesse si trailing newline)
+  for (let i = lines.length - 1; i >= Math.max(0, lines.length - 3); i--) {
+    const trimmed = lines[i]?.trim() ?? '';
+    if (trimmed.startsWith('SUGGESTIONS:')) {
+      const raw = trimmed.replace('SUGGESTIONS:', '').trim();
+      const suggestions = raw.split('|').map(s => s.trim()).filter(s => s.length > 0);
+      const cleanContent = lines.slice(0, i).join('\n').trimEnd();
+      return { cleanContent, suggestions };
+    }
   }
   return { cleanContent: content, suggestions: [] };
 }
@@ -119,11 +122,22 @@ export function setupWebSocket(httpServer: HTTPServer, frontendUrl: string): Soc
         // 3. Fin du stream + réponse complète (avec suggestions parsées)
         socket.emit('chat:typing', { isTyping: false });
         const { cleanContent, suggestions } = parseSuggestions(result.assistantMessage.content);
+
+        // Fallback : si pas de suggestions mais message contient une question, en générer
+        let finalSuggestions = suggestions;
+        if (suggestions.length === 0 && cleanContent.includes('?')) {
+          try {
+            finalSuggestions = await engine.generateSuggestions(cleanContent);
+          } catch {
+            // Silencieux — les chips sont optionnelles
+          }
+        }
+
         socket.emit('chat:response', {
           userMessage: result.userMessage,
           assistantMessage: { ...result.assistantMessage, content: cleanContent },
           briefReady: result.briefReady,
-          suggestions,
+          suggestions: finalSuggestions,
         });
 
         // 4. Notification si le brief est prêt
